@@ -1,0 +1,9 @@
+* {
+    box-sizing: border-box;
+}
+header{
+    background-color: beige;
+}
+.nav-btn{
+    background-color: chocolate;
+}
