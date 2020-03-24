@@ -1,0 +1,13 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2>New Article <Article></Article></h2>
+<br> <br>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">save</button>
+</form>
+{% endblock %}

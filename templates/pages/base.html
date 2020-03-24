@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=hea, initial-scale=1.0">
-    <title>Document</title>
+    <title>{% block title%}Article App{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -23,7 +23,7 @@
                             <a href="#" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Blog</a>
+                            <a href="{% url 'article:article_lists' %}" class="nav-link">Article</a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">About</a>
@@ -33,6 +33,7 @@
             </nav>
         </div>
     </header>
+    <br><br> <br>
         <div class="container">
             {% block content %} 
         
