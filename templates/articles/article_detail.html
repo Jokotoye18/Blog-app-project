@@ -1,0 +1,15 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div>
+    <p><b>{{article.title }}</b></p>
+    <hr>
+    <p>By: {{article.author.username}} | on {{article.date_added}}</p>
+    <p>{{article.body}}</p>
+    <p><a href="{% url 'article:article_update' article.pk %}">Edit</a></p>
+    <p><a href="{% url 'article:article_delete' article.pk %}">Delete</a></p>
+    <p>Back to<a href="{% url 'article:article_lists' %}"> All Articles</a></p>
+</div>
+{% endblock %}

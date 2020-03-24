@@ -1,0 +1,12 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% for article in articles %}
+<div>
+    <h3><a href="{% url 'article:article_detail' article.pk %}">{{ article }}</a></h3>
+    <p>Date: {{ article.date_added }}</p>
+</div>
+{% endfor %}
+{% endblock %}
