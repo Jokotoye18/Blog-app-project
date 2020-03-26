@@ -1,13 +1,21 @@
 {% extends 'pages/base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h2>New Article <Article></Article></h2>
-<br> <br>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">save</button>
-</form>
+<div class="row justify-content-center" >
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="text-center">New Article</h2><br>
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-primary">save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

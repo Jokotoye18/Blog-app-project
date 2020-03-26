@@ -8,9 +8,16 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 class ArticleListView(ListView):
-    model = Article
     template_name = 'articles/article_lists.html'
     context_object_name = 'articles'
+
+    def get_queryset(self, *args):
+        return Article.objects.order_by('-date_added')[:5]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_article'] = Article.objects.all()
+        return context
 
 class ArticleDetailView(DetailView):
     model = Article

@@ -3,10 +3,20 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-{% for article in articles %}
-<div>
-    <h3><a href="{% url 'article:article_detail' article.pk %}">{{ article }}</a></h3>
-    <p>Date: {{ article.date_added }}</p>
+<div class="contain flex ">
+    <main role="main" class="flex-main jumbotron">
+        <h1 class="text-center"><b>Latest Article</b></h1>
+        {% for article in articles %}
+        <div class="card mb-4">
+            <h3><a class="card-title" href="{% url 'articles:article_detail' article.pk %}">{{ article }}</a></h3>
+            <p class="card-text text-muted">Date: {{ article.date_added }}</p>
+        </div>
+        {% endfor %}
+    </main>
+    
+    <aside class="flex-aside">
+        <button class="btn btn-dark"><a href="{% url 'articles:article_create' %}"><i class="fa fa-plus fa-lg">New Article</i></a></button>
+        <a href=""></a>
+    </aside>
 </div>
-{% endfor %}
 {% endblock %}

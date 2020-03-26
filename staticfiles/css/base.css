@@ -1,9 +1,56 @@
-* {
-    box-sizing: border-box;
+.asteriskField,#hint_id_username,#hint_id_password1,#hint_id_password2{
+    display: none;
+}
+img{
+    width: 100%;
+}
+a{
+    color: floralwhite;
 }
 header{
-    background-color: beige;
+    background: rgb(33, 48, 56);
+    width: 100%;
 }
-.nav-btn{
-    background-color: chocolate;
+.brand{
+    text-align: center;
+}
+.contain{
+    width: 100%;
+    margin: 0 auto;
+    max-width: 786px;
+}
+.head{
+    margin-bottom: 3em;
+}
+header{
+    margin-bottom: 3em;
+}
+.head img{
+    width: 100%;
+    height: 18rem;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+footer{
+    margin-top: 3em;
+    background-color: rgb(33, 48, 56);
+    color: beige;
+}
+.foot{
+    text-align: center;
+}
+.home-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.home-flex-main{
+    width: 70%;
+}
+.home-flex-aside{
+    width: 25%;
+}
+
+@media (max-width:600px){
+
 }
