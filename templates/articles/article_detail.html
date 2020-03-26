@@ -3,13 +3,18 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div>
-    <p><b>{{article.title }}</b></p>
-    <hr>
-    <p>By: {{article.author.username}} | on {{article.date_added}}</p>
-    <p>{{article.body}}</p>
-    <p><a href="{% url 'article:article_update' article.pk %}">Edit</a></p>
-    <p><a href="{% url 'article:article_delete' article.pk %}">Delete</a></p>
-    <p>Back to<a href="{% url 'article:article_lists' %}"> All Articles</a></p>
-</div>
+<article class="card">
+    <div class="card-header">
+        <p class="card-title"><b>{{article.title }}</b></p>
+        <p >By: {{article.author.username}} | on {{article.date_added}}</p>
+    </div>
+    <div class="card-body">
+        <p class="card-text">{{article.body}}</p>
+    </div>
+    <div class="card-footer text-center text-muted">
+        <a class="card-link" href="{% url 'articles:article_update' article.pk %}">Edit</a>
+        <a class="card-link" href="{% url 'articles:article_delete' article.pk %}">Delete</a>
+        <a class="card-link" href="{% url 'articles:article_lists' %}">View all Articles</a>
+    </div>
+</article>
 {% endblock %}

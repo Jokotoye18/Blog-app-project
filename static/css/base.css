@@ -1,6 +1,41 @@
-* {
-    box-sizing: border-box;
+.asteriskField,#hint_id_username,#hint_id_password1,#hint_id_password2{
+    display: none;
+}
+img{
+    width: 100%;
 }
 header{
-    background-color: beige;
+    background: rgb(33, 48, 56);
+    width: 100%;
+}
+.brand{
+    text-align: center;
+}
+.contain{
+    width: 100%;
+    margin: 0 auto;
+    max-width: 786px;
+}
+footer{
+    margin-top: 3em;
+    background-color: rgb(33, 48, 56);
+    color: beige;
+}
+.foot{
+    text-align: center;
+}
+.flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.flex-main{
+    width: 70%;
+}
+.flex-aside{
+    width: 25%;
+}
+
+@media (max-width:600px){
+
 }

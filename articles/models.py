@@ -10,8 +10,10 @@ class Article(models.Model):
     body = models.TextField()
     date_added = models.DateField(auto_now_add=True)
 
+    objects = models.Manager() 
+
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('article:article_detail', args=[str(self.pk)])                                                                                                                                           
+        return reverse('articles:article_detail', args=[str(self.pk)])                                                                                                                                           
