@@ -1,16 +1,19 @@
-{% extends 'pages/base.html' %}
+{% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="row justify-content-center" >
-    <div class="col-8 ">
+    <div class="col-lg-8 col-md-10 col-sm-12 ">
         <div class="card">
             <div class="card-body">
                 <h2>Log in</h2><br>
                 <form method="POST" novalidate>
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <button class="btn btn-primary " type="submit">Log in</button>
+                    <button class="btn btn-primary btn-block" type="submit">Log in</button>
                 </form>
+                <div class="card-footer text-muted text-center">
+                    New here? <a href="{% url 'accounts:signup' %}">sign up</a>
+                </div>
             </div>
         </div>
     </div>
