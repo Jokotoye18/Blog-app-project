@@ -1,9 +1,6 @@
 .asteriskField,#hint_id_username,#hint_id_password1,#hint_id_password2{
     display: none;
 }
-img{
-    width: 100%;
-}
 header{
     background: rgb(33, 48, 56);
     width: 100%;
@@ -37,5 +34,5 @@ footer{
 }
 
 @media (max-width:600px){
-
+    
 }

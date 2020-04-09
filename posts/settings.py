@@ -43,6 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'rest_framework',
+
+    #django_comments app
+    'django_comments_xtd',
+    'django_comments',
+     
 
     #third party app
     'crispy_forms',
@@ -78,6 +85,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'posts.wsgi.application'
 
+#sites_app
+SITE_ID = 1
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -89,7 +99,11 @@ DATABASES = {
         'USER': 'dwgxlqup',
         'HOST': 'drona.db.elephantsql.com',
         'PASSWORD': 'v9sSXHrbeesUGiIeUkhEbd1biDrcw3OD',
-        'PORT': '5432'
+        'PORT': '5432',
+        'TEST': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        },
     }
 }
 
@@ -139,8 +153,35 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 AUTH_USER_MODEL = 'accounts.User'
 
-LOGIN_REDIRECT_URL = 'pages:home'
+LOGIN_REDIRECT_URL = 'articles:article_lists'
 LOGOUT_REDIRECT_URL = 'pages:home'
 
-
+# crispy_form
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+#email_settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+
+#comments_app
+COMMENTS_APP = 'django_comments_xtd'
+COMMENTS_XTD_MAX_THREAD_LEVEL = 8
+COMMENTS_XTD_COMFIRM_EMAIL = True
+COMMENTS_XTD_SALT = (b"Timendi causa est nescire." b"Aequam memento rebus in arduis servare mentem.")
+COMMENTS_XTD_SEND_HTML_EMAIL = True 
+COMMENTS_XTD_APP_MODEL_OPTIONS = {
+     'articles.article': {
+        'allow_flagging': True, 
+        'allow_feedback': True, 
+        'show_feedback': True,
+     } 
+}
+
+
+
+          
+
+
+#MANAGERS = ( 
+#    ('Jokotoye Ademola', 'jokotoyedemola95@gmail.com'),
+# )
+

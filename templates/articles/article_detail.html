@@ -1,5 +1,8 @@
-{% extends 'pages/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
+{% load comments %}
+{% load comments_xtd %}
+{% load crispy_forms_tags %}
 {% block title %}Home{% endblock %}
 
 {% block content %}
@@ -8,13 +11,57 @@
         <p class="card-title"><b>{{article.title }}</b></p>
         <p >By: {{article.author.username}} | on {{article.date_added}}</p>
     </div>
-    <div class="card-body">
-        <p class="card-text">{{article.body}}</p>
+    <div class="card-body mb-5">
+        <p class="card-text">{{article.body|linebreaks}}</p>
+        {% if article.author == request.user %}
+            <div class="text-center">
+                <a class="card-link" href="{% url 'articles:article_update' article.pk %}">Edit</a>
+                <a class="card-link" href="{% url 'articles:article_delete' article.pk %}">Delete</a>
+                <a class="card-link" href="{% url 'articles:article_lists' %}">View all Articles</a>
+            </div>
+        {% else %}
+        <div class="text-center">
+            <a class="card-link" href="{% url 'articles:article_lists' %}">View all Articles</a>
+        </div>
+        {% endif %}
     </div>
-    <div class="card-footer text-center text-muted">
-        <a class="card-link" href="{% url 'articles:article_update' article.pk %}">Edit</a>
-        <a class="card-link" href="{% url 'articles:article_delete' article.pk %}">Delete</a>
-        <a class="card-link" href="{% url 'articles:article_lists' %}">View all Articles</a>
+    <hr class="text-center">
+    <div class="row justify-content-center">
+        <div class="col-xs-8 col-sm-8 col-md-10 col-lg-12">
+            <h4 class="card-text text-center">Post your comment</h4>
+            <div class="ml-4 mr-3">
+                {% render_comment_form for article %}
+            </div>
+        </div>
     </div>
-</article>
+    
+    {% get_comment_count for article as comment_count %}
+    <div class="card-header">
+        <div>
+            <p class="card-text">{{ comment_count }} comment{{ comment_count|pluralize }} ha{{ comment_count|pluralize:"s,ve" }} been posted</p>
+        </div>
+        {% if comment_count %}
+        <hr>
+        <ul class="media-list">
+            {%  render_xtdcomment_tree for article allow_flagging allow_feedback show_feedback  %}
+        </ul>
+        {% endif %}
+    </div>
+</article> 
 {% endblock %}
+{% block extra-js %} 
+<script>
+    window.comments_props = {}
+</script>
+
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+<script src="{% static 'django_comments_xtd/js/vendor~plugin-2.4.3.js' %}"></script> 
+<script src="{% static 'django_comments_xtd/js/plugin-2.4.3.js' %}"></script>
+<script> 
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip({html: true}); 
+    });
+</script>
+{% endblock extra-js %}
+
+
