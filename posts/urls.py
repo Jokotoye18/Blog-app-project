@@ -8,7 +8,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('comments/', include('django_comments_xtd.urls')),
     path('', include('pages.urls')),
-    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     path('accounts/', include('accounts.urls')),
-    path('article/', include('articles.urls')), 
+    path('', include('articles.urls')),
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]

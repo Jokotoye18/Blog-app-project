@@ -1,3 +1,10 @@
+*{
+    text-decoration: none;
+    list-style: none;
+}
+a:hover{
+    text-decoration: none;
+}
 .asteriskField,#hint_id_username,#hint_id_password1,#hint_id_password2{
     display: none;
 }
@@ -31,6 +38,9 @@ footer{
 }
 .flex-aside{
     width: 25%;
+}
+.archive{
+    margin: 0 2em;
 }
 
 @media (max-width:600px){

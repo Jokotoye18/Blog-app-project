@@ -10,6 +10,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
+
 class ArticleListView( ListView):
     template_name = 'articles/article_lists.html'
     context_object_name = 'articles'
