@@ -22,6 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '#p16i(40bnb$-z8d@6%tcnczczuo%jkibfe2swvmo)pby*bjx+'
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -93,18 +94,18 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    #'default': {
-    #    'ENGINE': 'django.db.backends.postgresql',
-    #    'NAME': 'dwgxlqup',
-    #    'USER': 'dwgxlqup',
-    #    'HOST': 'drona.db.elephantsql.com',
-    #    'PASSWORD': 'v9sSXHrbeesUGiIeUkhEbd1biDrcw3OD',
-    #    'PORT': '5432',
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dwgxlqup',
+        'USER': 'dwgxlqup',
+        'HOST': 'drona.db.elephantsql.com',
+        'PASSWORD': 'fp5ywvZkPz43cfZDJlsgitDblmQKMaHu',
+        'PORT': '5432',
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     #},
+    },
 }
 
 
@@ -160,7 +161,13 @@ LOGOUT_REDIRECT_URL = 'pages:home'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 #email_settings
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+EMAIL_HOST = 'smtp.sendgrid.net' 
+EMAIL_HOST_USER = 'apikey' 
+EMAIL_HOST_PASSWORD = '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' 
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 
 #comments_app
 COMMENTS_APP = 'django_comments_xtd'
@@ -181,7 +188,5 @@ COMMENTS_XTD_APP_MODEL_OPTIONS = {
           
 
 
-#MANAGERS = ( 
-#    ('Jokotoye Ademola', 'jokotoyedemola95@gmail.com'),
-# )
+
 
