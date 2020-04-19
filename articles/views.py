@@ -20,7 +20,7 @@ class ArticleListView( ListView):
         return Article.objects.order_by('-date_added')
 
 
-class ArticleDetailView( DetailView):
+class ArticleDetailView(DetailView):
     model = Article
     template_name = 'articles/article_detail.html'
     login_url = 'login'
@@ -32,6 +32,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     template_name = 'articles/article_new.html'
     fields = ['title', 'body']
     login_url = 'login'
+
 
 
     def form_valid(self, form):

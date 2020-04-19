@@ -6,19 +6,29 @@
 <div class="contain-img">
     <img class="card-img-top" src="/static/images/pexels-photo-3023358n3.jpeg" alt="" width="100%">
 </div>
-{% endblock  %}
+{% endblock  %} 
 
 {% block content %}
-<div class="contain jumbotron flex">
-    <main class="flex-main">
-        <h1>Ademola</h1>
-    </main>
-    <aside class="flex-aside">
-        <h3 class="text-center">About me</h3>
-        <figure>
-            <img src="/static/images/Optimized-IMG_20190618_135907_7.jpg" alt="" width= "100%">
-            <figcaption class="text-center">Jokotoye Ademola</figcaption>
-        </figure><br>
-    </aside>
+<div class="contain">
+    <div class="row justify-content-between my-2">
+        <div class="d-flex flex-column col-1 justify-content-start" style="border: 1px solid red;">
+            <a style="color: #3b5998;" href=""><i class="fab fa-facebook-f fa-2x my-2"></i></a>
+            <a style="color: #ffdc7d;" href=""><i class="fab fa-instagram fa-2x my-2"></i></a>
+            <a style="color: #007bb5;" href=""><i class="fab fa-linkedin fa-2x my-2"></i></a>
+            <a style="color: #1da1f2;" href=""><i class="fab fa-twitter fa-2x my-2"></i></a>
+        </div>
+        <div class="row justify-content-between col-11 home-bg align-item-start " style="border: 1px solid red;">
+            <main class="col-8" role="main">
+                <h1>Ademola</h1>
+            </main>
+            <aside class="col-4">
+                <h3 class="text-center">About me</h3>
+                <figure>
+                    <img src="/static/images/Optimized-IMG_20190618_135907_7.jpg" alt="" width= "100%">
+                    <figcaption class="text-center">Jokotoye Ademola</figcaption>
+                </figure><br>
+            </aside>
+        </div>
+    </div>
 </div>
 {% endblock %}

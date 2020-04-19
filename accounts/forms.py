@@ -6,7 +6,11 @@ from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ['username', 'email']
+        fields = ['username', 'email',]
+        widgets = {
+            'username':forms.TextInput(attrs={'placeholder':'username'}),
+            'email':forms.TextInput(attrs={'placeholder':'email: e.g johndove@gmail.com'}),
+        }
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta:

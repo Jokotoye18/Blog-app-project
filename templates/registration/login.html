@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="row justify-content-center" >
-    <div class="col-lg-8 col-md-10 col-sm-12 ">
-        <div class="card">
-            <div class="card-body">
-                <h2>Log in</h2><br>
-                <form method="POST" novalidate>
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <button class="btn btn-primary btn-block" type="submit">Log in</button>
-                    <p class="text-center mb-5"><a href="{% url 'password_reset' %}">Forget password?</a></p>
-                </form>
-                <div class="card-footer text-muted text-center ">
-                    New here? <a href="{% url 'accounts:signup' %}">sign up</a>
+<div class="container"> 
+    <div class="row justify-content-center" >
+        <div class="col-sm-8 col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center">Log in</h2><br>
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button class="btn btn-primary btn-block" type="submit">Log in</button>
+                        <p class="text-center mb-5"><a href="{% url 'password_reset' %}">Forget password?</a></p>
+                    </form>
+                    <div class="card-footer text-muted text-center ">
+                        New here? <a href="{% url 'accounts:signup' %}">sign up</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -37,13 +37,9 @@ class AccountUpdateView(TestCase):
 
     def setUp(self):
         self.user = get_user_model().objects.create_user(
-            #first_name = '',
-            #last_name = '',
             username = 'ademola',
             email = 'ademola@gmail.com'
         )
-        self.update= get_user_model().objects.create_user(instance=self.user)
-
     def test_accounts_update_status_code(self):
         response = self.client.get('/accounts/')
         self.assertEqual(response.status_code, 200)
@@ -57,9 +53,12 @@ class AccountUpdateView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'accounts/account_update.html')
 
-#    def test_account_update_view(self):
-#        user_update = self.user
-#        response = self.client.post(reverse('accounts:account_update'), {'user_updated':user_update})
-#        self.assertEqual(response.status_code, 302)
+    def test_account_update_view(self):
+        response = self.client.post(reverse('accounts:account_update'),{
+            
+        })
+        user_update = self.user
+        response = self.client.post(reverse('accounts:account_update'), {'user_updated':user_update})
+        self.assertEqual(response.status_code, 302)
         
 

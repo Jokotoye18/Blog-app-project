@@ -25,8 +25,12 @@ def account_update(request):
         form = AccountUpdateForm(request.POST, instance=request.user)
         if form.is_valid:
             form.save()
-        messages.success(request, f"Your accounts has been updated succesfully")
-        return redirect('pages:home')
+            messages.success(request, f"Your accounts has been updated succesfully")
+            return redirect('pages:home')
+
+        else:
+            messages.warning(request, 'Please correct the error  below')
+
     else:
         form = AccountUpdateForm(instance=request.user) 
     context = {'form':form}

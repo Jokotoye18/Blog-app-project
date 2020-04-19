@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
     'rest_framework',
+    'markdown_editor',
 
     #django_comments app
     'django_comments_xtd',
@@ -101,11 +103,11 @@ DATABASES = {
         'HOST': 'drona.db.elephantsql.com',
         'PASSWORD': 'fp5ywvZkPz43cfZDJlsgitDblmQKMaHu',
         'PORT': '5432',
+    },
     #'default': {
     #    'ENGINE': 'django.db.backends.sqlite3',
     #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     #},
-    },
 }
 
 
@@ -162,11 +164,13 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 #email_settings
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+#SENDGRID_API_KEY = 
 EMAIL_HOST = 'smtp.sendgrid.net' 
 EMAIL_HOST_USER = 'apikey' 
-EMAIL_HOST_PASSWORD = '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' 
+EMAIL_HOST_PASSWORD = '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' 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'jokotoyeademola995@gmail.com'
 
 
 #comments_app
@@ -183,8 +187,14 @@ COMMENTS_XTD_APP_MODEL_OPTIONS = {
      } 
 }
 
-
-
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
           
 
 

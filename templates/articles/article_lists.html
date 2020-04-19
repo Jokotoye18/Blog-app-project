@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% load comments %}
 {% block title %}Home{% endblock %}
 
@@ -11,7 +12,7 @@
         {% get_comment_count for article as comment_count %}
         <div class="card mb-4">
             <h3><a class="card-title" href="{% url 'articles:article_detail' article.pk %}">{{ article.title }}</a></h3>
-            <p class="card-text text-muted">Date: {{ article.date_added }}</p>
+            <p class="card-text text-muted">{{ article.date_added|naturaltime }}</p>
             {% if comment_count %}
                 <p>{{ comment_count }} comment{{ comment_count|pluralize }} </p>
             {% endif %}

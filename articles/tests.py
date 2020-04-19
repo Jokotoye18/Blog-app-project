@@ -52,22 +52,22 @@ class ArticleModelViewTest(TestCase):
             'body': 'My title body',
             'author': self.user
         })
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'My title')
         self.assertContains(response, 'My title body')
 
     def test_article_update_view(self):
-        response = self.client.get(reverse('articles:article_update', kwargs={'pk': 1}), {
+        response = self.client.post(reverse('articles:article_update', kwargs={'pk': 1}), {
             'title': 'My title updated',
             'body': 'My article body updated'
         })
-        self.assertEqual(response, 200)
+        self.assertEqual(response, 302)
 
     def test_article_delete_view(self):
         response = self.client.get(
             reverse('articles:article_delete', args='1')
             )
-        self.assertEqual(response, 200)
+        self.assertEqual(response.status_code, 200)
 
 
 
