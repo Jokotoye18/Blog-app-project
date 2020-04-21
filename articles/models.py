@@ -5,6 +5,9 @@ from django.contrib.auth import get_user_model
 from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator, XtdCommentModerator
 
+#from django_comments.moderation import CommentModerator
+#from django_comments_xtd.moderation import moderator, XtdCommentModerator
+
 
 
 class Article(models.Model):
@@ -19,7 +22,7 @@ class Article(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('articles:article_detail', args=[str(self.pk)])
+        return reverse('articles:article_detail', kwargs={'pk':self.pk})
 
 
 class ArticleCommentModerator(XtdCommentModerator):

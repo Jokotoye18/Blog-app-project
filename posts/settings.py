@@ -33,11 +33,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
 
-    #local app
-    'accounts',
-    'pages',
-    'articles',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,6 +47,11 @@ INSTALLED_APPS = [
     #django_comments app
     'django_comments_xtd',
     'django_comments',
+
+     #local app
+    'articles',
+    'accounts',
+    'pages',
      
 
     #third party app
@@ -162,6 +162,23 @@ LOGOUT_REDIRECT_URL = 'pages:home'
 # crispy_form
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+#comments_app
+COMMENTS_APP = 'django_comments_xtd'
+COMMENTS_XTD_MAX_THREAD_LEVEL = 8
+COMMENTS_XTD_COMFIRM_EMAIL = True
+COMMENTS_XTD_SALT = (b"Timendi causa est nescire. " b"Aequam memento rebus in arduis servare mentem.")
+COMMENTS_XTD_SEND_HTML_EMAIL = True 
+COMMENTS_XTD_MARKUP_FALLBACK_FILTER = 'markdown'
+COMMENTS_XTD_APP_MODEL_OPTIONS = {
+     'articles.article': {
+        'allow_flagging': True, 
+        'allow_feedback': True, 
+        'show_feedback': True,
+     } 
+}
+MANAGERS = ( ('Jookotoye Ademola', 'jokotoyeademola995@gmail.com'), )
+
+
 #email_settings
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
 #SENDGRID_API_KEY = 
@@ -172,20 +189,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'jokotoyeademola995@gmail.com'
 
-
-#comments_app
-COMMENTS_APP = 'django_comments_xtd'
-COMMENTS_XTD_MAX_THREAD_LEVEL = 8
-COMMENTS_XTD_COMFIRM_EMAIL = True
-COMMENTS_XTD_SALT = (b"Timendi causa est nescire." b"Aequam memento rebus in arduis servare mentem.")
-COMMENTS_XTD_SEND_HTML_EMAIL = True 
-COMMENTS_XTD_APP_MODEL_OPTIONS = {
-     'articles.article': {
-        'allow_flagging': True, 
-        'allow_feedback': True, 
-        'show_feedback': True,
-     } 
-}
 
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
