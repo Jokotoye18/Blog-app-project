@@ -10,14 +10,13 @@
         <h1 class="text-center"><b>Latest Article</b></h1>
         {% for article in articles %}
         {% get_comment_count for article as comment_count %}
-        <div class="card mb-4">
-            <h3><a class="card-title" href="{% url 'articles:article_detail' article.pk %}">{{ article.title }}</a></h3>
-            <p class="card-text text-muted">{{ article.date_added|naturaltime }}</p>
-            {% if comment_count %}
-                <p>{{ comment_count }} comment{{ comment_count|pluralize }} </p>
-            {% endif %}
-           <!-- <a class="btn btn-link" href="{% url 'articles:article_detail' article.pk %}">comment: {{article.comments.count}}</a>-->
-        </div>
+            <div class="card mb-4">
+                <h3><a class="card-title" href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article.title }}</a></h3>
+                <p class="card-text text-muted"><i class="fas fa-clock">  {{article.date_added|naturaltime }}</i></p>
+                {% if comment_count %}
+                    <p>{{ comment_count }} comment{{ comment_count|pluralize }} </p>
+                {% endif %}
+            </div>
         {% endfor %}
     </main>
     

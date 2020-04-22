@@ -13,14 +13,14 @@
             <div class="card">
                 <div class="card-header">
                     <p class="card-title"><b>{{article.title }}</b></p>
-                    <p >By: {{article.author.username}} | {{article.date_added|naturaltime }}</p>
+                    <p><i class="fas fa-user">  {{article.author.username}}</i> | <i class="fas fa-clock">  {{article.date_added|naturaltime }}</i></p>
                 </div>
                 <div class="card-body mb-5">
                     <p class="card-text">{{article.body|linebreaks}}</p>
                     {% if article.author == request.user %}
                         <div class="text-center">
-                            <a class="card-link" href="{% url 'articles:article_update' article.pk %}">Edit</a>
-                            <a class="card-link" href="{% url 'articles:article_delete' article.pk %}">Delete</a>
+                            <a class="card-link" href="{% url 'articles:article_update' article.slug article.pk %}">Edit</a>
+                            <a class="card-link" href="{% url 'articles:article_delete' article.slug article.pk %}">Delete</a>
                             <a class="card-link" href="{% url 'articles:article_lists' %}">View all Articles</a>
                         </div>
                     {% else %}

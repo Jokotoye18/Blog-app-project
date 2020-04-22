@@ -6,9 +6,9 @@ from .views import ArticleListView, ArticleDetailView, ArticleCreateView, Articl
 app_name = 'articles'
 
 urlpatterns = [
-    path('articles/', ArticleListView.as_view(), name='article_lists'),
+    path('article/<slug:slug>-<int:pk>/', ArticleDetailView.as_view(), name='article_detail'),
+    path('article/<slug:slug>-<int:pk>/update/', ArticleUpdateView.as_view(), name='article_update'),
+    path('article/<slug:slug>-<int:pk>/delete/', ArticleDeleteView.as_view(), name='article_delete'),
     path('article/new/', ArticleCreateView.as_view(), name='article_create'),
-    path('article/<int:pk>/', ArticleDetailView.as_view(), name='article_detail'),
-    path('<int:pk>/update/', ArticleUpdateView.as_view(), name='article_update'),
-    path('<int:pk>/delete/', ArticleDeleteView.as_view(), name='article_delete'),
+    path('articles/', ArticleListView.as_view(), name='article_lists'),
 ]

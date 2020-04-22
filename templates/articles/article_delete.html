@@ -10,7 +10,7 @@
             {% csrf_token %}
             <p>Are you sure you want to delete "{{ article.title }}"?</p>
             <button type="submit" class="btn btn-danger">Comfirm</button>  
-            <button type="submit" class="btn btn-secondary"><a href="{% url 'articles:article_detail' article.pk %}">Go back</a></button>
+            <button type="submit" class="btn btn-secondary"><a href="{% url 'articles:article_detail' article.slug article.pk %}">Go back</a></button>
         </form>
     </div>
 </div>
