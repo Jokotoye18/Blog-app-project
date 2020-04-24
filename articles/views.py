@@ -15,16 +15,66 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 class ArticleListView(ListView):
     template_name = 'articles/article_lists.html'
     context_object_name = 'articles'
-    login_url = 'login'
+    queryset = Article.objects.order_by('-date_added')
+    paginate_by = 8
 
-    def get_queryset(self, *args):
-        return Article.objects.order_by('-date_added')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['latest_article'] = Article.objects.order_by('-date_added')[:4]
+        context['django_category_count'] = Article.objects.filter(category__iexact='django').count()
+        context['python_category_count'] = Article.objects.filter(category__iexact='python').count()
+        context['other_category_count'] = Article.objects.filter(category__iexact='other').count()
+        return context
 
+class DjangoArticleList(ListView):
+    model = Article
+    context_object_name = 'django_list'
+    template_name = 'articles/django_article_list.html'
+    paginate_by = 8
+
+    def get_queryset(self):
+        self.query = Article.objects.filter(category__iexact='django').order_by('-date_added')
+        return self.query
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['django_latest'] = Article.objects.filter(category__iexact='django').order_by('-date_added')[:4]
+        return context
+
+class PythonArticleList(ListView):
+    model = Article
+    context_object_name = 'python_list'
+    template_name = 'articles/python_article_list.html'
+    paginate_by = 8
+
+    def get_queryset(self):
+        self.query = Article.objects.filter(category__iexact='python').order_by('-date_added')
+        return self.query
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['python_latest'] = Article.objects.filter(category__iexact='python').order_by('-date_added')[:4]
+        return context
+
+
+class OtherArticleList(ListView):
+    model = Article
+    context_object_name = 'other_list'
+    template_name = 'articles/other_article_list.html'
+    paginate_by = 8
+
+    def get_queryset(self):
+        self.query = Article.objects.filter(category__iexact='other').order_by('-date_added')
+        return self.query
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['other_latest'] = Article.objects.filter(category__iexact='other').order_by('-date_added')[:4]
+        return context
 
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'articles/article_detail.html'
-    login_url = 'login'
     query_pk_and_slug = True
     slug_field = 'slug__iexact'
     

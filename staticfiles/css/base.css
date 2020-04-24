@@ -12,6 +12,10 @@ header{
     background: rgb(33, 48, 56);
     width: 100%;
 }
+.center{
+    width: 100%;
+    margin: 0, auto;
+}
 .brand{
     text-align: center;
 }

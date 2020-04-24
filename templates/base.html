@@ -25,10 +25,13 @@
                         <a class="nav-link" href="{% url 'pages:home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">About</a>
+                        <a class="nav-link" href="{% url 'articles:article_lists' %}">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'articles:article_lists' %}">Article</a>
+                        <a class="nav-link" href="{% url 'pages:contact' %}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">About</a>
                     </li>
                 </ul>
                 {% if user.is_authenticated %}

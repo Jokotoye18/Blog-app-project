@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.humanize',
     'rest_framework',
+    #markdown
+    'django_markdown2',
     'markdown_editor',
 
     #django_comments app

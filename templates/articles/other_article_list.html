@@ -9,7 +9,7 @@
     <main role="main" class="flex-main card mb-5">
         <h1 class="text-center card-header"><b>Articles</b></h1>
         <div class="card-body border border-dark">
-            {% for article in articles %}
+            {% for article in other_list %}
             {% get_comment_count for article as comment_count %}
                 <h3><a class="card-title" href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article.title }}</a></h3>
                 <p class="card-text text-muted lead"><i class="fas fa-clock">  {{article.date_added|naturaltime }}</i></p>
@@ -24,19 +24,11 @@
             <button class="btn btn-dark"><a href="{% url 'articles:article_create' %}"><i class="fa fa-plus fa-lg">New Article</i></a></button>
         </div>
         <div class="card mb-4">
-            <h3 class="card-header">Latest</h3>
+            <h3 class="card-header">Other Latest</h3>
             <div class="card-body border border-dark">
-                {% for article in latest_article %}
-                    <p class="card-text lead"><a href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article }}</a></p>
+                {% for latest in other_latest %}
+                    <p class="card-text lead"><a href="{% url 'articles:article_detail' latest.slug latest.pk %}">{{ latest }}</a></p>
                 {% endfor %}
-            </div>
-        </div>
-        <div class="card">
-            <h3 class="card-header">Category</h3>
-            <div class="card-body border border-dark">
-                <h6 class="card-title"><a href="{% url 'articles:django_article_list' %}">Django ({{ django_category_count }})</a></h6>
-                <h6 class="card-title"><a href="{% url 'articles:python_article_list' %}">Python({{ python_category_count }})</a></h6>
-                <h6 class="card-title"><a href="{% url 'articles:other_article_list' %}">Others({{other_category_count}})</a></h6>
             </div>
         </div>
     </aside>

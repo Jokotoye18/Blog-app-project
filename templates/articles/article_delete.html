@@ -3,15 +3,21 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="card contain">
-    <div class="card-body">
-        <h3>Delete</h3>
-        <form method="POST">
-            {% csrf_token %}
-            <p>Are you sure you want to delete "{{ article.title }}"?</p>
-            <button type="submit" class="btn btn-danger">Comfirm</button>  
-            <button type="submit" class="btn btn-secondary"><a href="{% url 'articles:article_detail' article.slug article.pk %}">Go back</a></button>
-        </form>
+<div class="container">
+    <div class="row justify-content-center mb-5">
+        <div class="col-sm-8 col-md-8 col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Delete</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <p class=" lead">Are you sure you want to delete "{{ article.title }}"?</p>
+                        <button type="submit" class="btn btn-danger">Comfirm</button>  
+                        <button type="submit" class="btn btn-secondary"><a href="{% url 'articles:article_detail' article.slug article.pk %}">Go back</a></button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

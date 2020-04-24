@@ -3,6 +3,7 @@
 {% load humanize %}
 {% load comments %}
 {% load comments_xtd %}
+{% load md2 %}
 {% load crispy_forms_tags %}
 {% block title %}Home{% endblock %}
 
@@ -12,11 +13,11 @@
         <div class="col-sm-10 col-md-10 col-lg-10">
             <div class="card">
                 <div class="card-header">
-                    <p class="card-title"><b>{{article.title }}</b></p>
-                    <p><i class="fas fa-user">  {{article.author.username}}</i> | <i class="fas fa-clock">  {{article.date_added|naturaltime }}</i></p>
+                    <p class="card-title lead"><b>{{article.title }}</b></p>
+                    <p class="lead"><i class="fas fa-user pr-3">  {{article.author.username}}</i> | <i class="fas fa-clock pl-3">  {{article.date_added|naturaltime }}</i></p>
                 </div>
                 <div class="card-body mb-5">
-                    <p class="card-text">{{article.body|linebreaks}}</p>
+                    <p class="lead">{{article.body|safe}}</p>
                     {% if article.author == request.user %}
                         <div class="text-center">
                             <a class="card-link" href="{% url 'articles:article_update' article.slug article.pk %}">Edit</a>
