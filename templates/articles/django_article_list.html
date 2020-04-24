@@ -7,14 +7,14 @@
 {% block content %}
 <div class="contain flex jumbotron">
     <main role="main" class="flex-main card mb-5">
-        <h1 class="text-center card-header"><b>Articles</b></h1>
+        <h1 class="text-center card-header lead"><b>Django Articles</b></h1>
         <div class="card-body border border-dark">
             {% for article in django_list %}
             {% get_comment_count for article as comment_count %}
-                <h3><a class="card-title" href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article.title }}</a></h3>
-                <p class="card-text text-muted lead"><i class="fas fa-clock">  {{article.date_added|naturaltime }}</i></p>
+                <h3 class="lead"><a class="card-title lead" href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article.title }}</a></h3>
+                <p class="card-text text-muted lead"><small><i class="fas fa-clock">  {{article.date_added|naturaltime }}</i></small></p>
                 {% if comment_count %}
-                    <p class="card-text text-muted mt--2">{{ comment_count }} comment{{ comment_count|pluralize }} </p>
+                    <p class="card-text text-muted lead"><small><i class="fas fa-comments">  {{ comment_count }} comment{{ comment_count|pluralize }} </i></small></p>
                 {% endif %}
             {% endfor %}
         </div>
@@ -24,7 +24,7 @@
             <button class="btn btn-dark"><a href="{% url 'articles:article_create' %}"><i class="fa fa-plus fa-lg">New Article</i></a></button>
         </div>
         <div class="card mb-4">
-            <h3 class="card-header">Django Latest</h3>
+            <h3 class="card-header lead">Django Latest</h3>
             <div class="card-body border border-dark">
                 {% for latest in django_latest %}
                     <p class="card-text lead"><a href="{% url 'articles:article_detail' latest.slug latest.pk %}">{{ latest }}</a></p>

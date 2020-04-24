@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+from decouple import config, Csv
 import os
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,13 +21,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#p16i(40bnb$-z8d@6%tcnczczuo%jkibfe2swvmo)pby*bjx+'
+#SECRET_KEY = '#p16i(40bnb$-z8d@6%tcnczczuo%jkibfe2swvmo)pby*bjx+'
+SECRET_KEY = config('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost', cast=Csv())
 
 
 # Application definition
@@ -99,15 +101,15 @@ SITE_ID = 1
 
 DATABASES = {
     #'default': {
-    #    'ENGINE': 'django.db.backends.postgresql',
-    #    'NAME': 'dwgxlqup',
-    #    'USER': 'dwgxlqup',
-    #    'HOST': 'drona.db.elephantsql.com',
-    #    'PASSWORD': 'fp5ywvZkPz43cfZDJlsgitDblmQKMaHu',
-    #    'PORT': '5432',
+    #    'ENGINE': config('DB_ENGINE'),
+    #    'NAME': config('DB_NAME'),
+    #    'USER': config('DB_USER'),
+    #    'HOST': config('DB_HOST'),
+    #    'PASSWORD': config('DB_PASSWORD'),
+    #    'PORT': 5432
     #},
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+       'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
 }
@@ -178,18 +180,17 @@ COMMENTS_XTD_APP_MODEL_OPTIONS = {
         'show_feedback': True,
      } 
 }
-MANAGERS = ( ('Jookotoye Ademola', 'jokotoyeademola995@gmail.com'), )
+MANAGERS = config('MANAGER', cast=Csv())
 
 
 #email_settings
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
-#SENDGRID_API_KEY = 
-EMAIL_HOST = 'smtp.sendgrid.net' 
-EMAIL_HOST_USER = 'apikey' 
-EMAIL_HOST_PASSWORD = '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' 
+EMAIL_HOST = config('EMAIL_HOST') 
+EMAIL_HOST_USER = config('EMAIL_HOST_USER') 
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'jokotoyeademola995@gmail.com'
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
 
 from django.contrib.messages import constants as messages
