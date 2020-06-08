@@ -4,41 +4,41 @@
 {% block title %}Home{% endblock %}
 
 {% block content-img %}
-<div class="contain-img">
-    <img class="card-img-top" src="/static/images/pexels-photo-3023358n3.jpeg" alt="" width="100%">
+<div class=" contain-img">
+    <img class="card-img-top" src="{% static 'images/pexels-photo-3023358n3.jpeg' %}" alt="Photo" width="100%">
 </div>
-{% endblock  %} 
+{% endblock  %}  
 
 {% block content %}
-<div class="contain">
-    <div class="row justify-content-between my-2">
-        <div class="d-flex border border-secondary  flex-column col-1 justify-content-start">
-            <a style="color: #3b5998;" href=""><i class="fab fa-facebook-f fa-2x my-2"></i></a>
-            <a style="color: #ffdc7d;" href=""><i class="fab fa-instagram fa-2x my-2"></i></a>
-            <a style="color: #007bb5;" href=""><i class="fab fa-linkedin fa-2x my-2"></i></a>
-            <a style="color: #1da1f2;" href=""><i class="fab fa-twitter fa-2x my-2"></i></a>
-        </div>
-        <div class="row border border-primary justify-content-between col-11 home-bg align-item-start">
-            <main class="col-8" role="main">
-                <h1>Ademola</h1>
-                <div>
+<div class="container max-width jumbotron">
+    <div class="row justify-content-between">
+        <main class="col-md-8 mb-5" role="main">
+            <h1>Ademola</h1>
+        </main>
+        <aside class="col-md-4">
+            <div class="card mb-4">
+                <div id="subscribe" class="card-body">
+                    <h3 class="card-title">Subscribe now</h3>
+                    <p class="lead card-text">Subscribe to my mailing list to receive updates from the blog</p>
                     <form action="" method="POST" novalidate>
                         {% csrf_token %}
                         {{form|crispy}}
-                        <div class="justify-content-center">
-                            <button type="submit" class="btn btn-secondary px-5">subscribe</button>
-                        </div>
+                        <button type="submit" class="btn btn-block btn-secondary subscribe">subscribe</button>
                     </form>
                 </div>
-            </main>
-            <aside class="col-4">
-                <h3 class="text-center">About me</h3>
-                <figure class="figure">
-                    <a href=""><img class="figure-img rounded" src="/static/images/Optimized-IMG_20190618_135907_7.jpg" alt="" width= "100%"></a>
-                    <figcaption class="figure-caption">Jokotoye Ademola</figcaption>
-                </figure><br>
-            </aside>
-        </div>
+            </div>
+            <div class="card my-4">
+                <div class="card-body">
+                    <div>
+                        <h3 class="card-title mb-2 border border-dark border-top-0 border-left-0 border-right-0  pb-1 text-center">About me</h3>
+                    </div>
+                    <figure class="">
+                        <a href="{% url 'pages:about' %}"><img title="Jokotye Ademola Akin" class="card-img-top rounded my-4 about"   src="{% static 'images/Optimized-IMG_20190618_135907_7.jpg' %}" alt="Jokotoye Ademola Akin" ></a>
+                        <figcaption class="lead">Jokotoye Ademola Akin is a Biomedical Engineering student at University of ilorin, Nigeria. He's currently in his final year of studies and keen to pursue careers in applied programming for healthcares and biomedical industries. <a href="{% url 'pages:about' %}">Read more</a></figcaption>
+                    </figure>
+                </div>
+            </div>
+        </aside>
     </div>
 </div>
 {% endblock %}

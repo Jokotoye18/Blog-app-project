@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load comments %}
+{% load humanize %}
+{% block title %}Tag{% endblock %}
+
+{% block content %}
+<div class="container max-width jumbotron">
+    <div class="row justify-content-center">
+        <main role="main" class="col-md-8 mb-5">
+            <div class="card">
+                <h1 class="text-center card-header lead"><b>{{ category.title }} Articles</b></h1>
+                <div class="card-body border border-dark">
+                    {% for article in article_tags %}
+                    {% get_comment_count for article as comment_count %}
+                        <div class="mb-4">
+                            <h3 class="lead"><a class="card-title lead" href="{% url 'articles:article_detail' article.slug article.pk %}">  {{ article.title }}</a></h3>
+                            <p class="card-text text-muted lead" style="display: inline;"><small><i class="fas fa-clock pr-3">  {{article.date_added|naturaltime }}</i></small></p>
+                            {% if comment_count %}
+                                <p class="card-text text-muted lead" style="display: inline;"><small><i class="fas fa-comments">  {{ comment_count }} comment{{ comment_count|pluralize }} </i></small></p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="my-5 text-center">
+                        <a class="card-link " href="{% url 'articles:article_lists' %}">View all Articles</a>
+                    </div>
+                    <div class="text-center">
+                        {% if is_paginated %}
+                
+                            {% if page_obj.has_previous %}
+                                <a class="btn btn-outline-info lead" href="?page=1">First</a>
+                                <a class="btn btn-outline-info lead" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                            {% endif %}
+
+                            {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                    <a class="btn btn-info" href="?page={{ num }}">{{ num }}</a>
+                                {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+                                    <a class="btn btn-outline-info" href="?page={{ num }}">{{ num }}</a>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <a class="btn btn-outline-info lead" href="?page={{ page_obj.next_page_number }}">Next</a>  
+                                <a class="btn btn-outline-info lead " href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                            {% endif %}
+                
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </main>
+        <aside class="col-md-4 mb-5">
+            <div class="mb-3">
+                <button class="btn btn-dark"><a href="{% url 'articles:article_create' %}"><i class="fa fa-plus fa-lg">New Article</i></a></button>
+            </div>
+            <div class="card mb-4">
+                <h3 class="card-header lead">{{ category }} Latests</h3>
+                <div class="card-body border border-dark">
+                    {% for latest in articles %}
+                        <p class="card-text lead"><a href="{% url 'articles:article_detail' latest.slug latest.pk %}">{{ latest }}</a></p>
+                    {% endfor %}
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+{% endblock %}

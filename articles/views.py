@@ -1,13 +1,15 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from .models import Article
 from django.contrib.auth import get_user_model
-from .models import Article
-
+from .models import Article, Category
+from django.db.models import Q
+from .forms import ArticleCreateForm, ArticleUpdateForm
 from django.urls import reverse_lazy,reverse
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import View
 from django.core.exceptions import PermissionDenied 
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView,TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
@@ -16,75 +18,50 @@ class ArticleListView(ListView):
     template_name = 'articles/article_lists.html'
     context_object_name = 'articles'
     queryset = Article.objects.order_by('-date_added')
-    paginate_by = 8
+    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['latest_article'] = Article.objects.order_by('-date_added')[:4]
-        context['django_category_count'] = Article.objects.filter(category__iexact='django').count()
-        context['python_category_count'] = Article.objects.filter(category__iexact='python').count()
-        context['other_category_count'] = Article.objects.filter(category__iexact='other').count()
+        context['categories'] = Category.objects.order_by('title')
+        context['latest_article'] = Article.objects.order_by('-date_added')[:5]
         return context
+    
 
-class DjangoArticleList(ListView):
-    model = Article
-    context_object_name = 'django_list'
-    template_name = 'articles/django_article_list.html'
-    paginate_by = 8
+class CategoryListView(ListView):
+    context_object_name = 'category_list'
+    template_name = 'articles/category_list.html'
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.filter(title=self.kwargs['title']).first()
+        context['category'] = Category.objects.filter(title=self.kwargs['title']).first()
+        context['articles'] = category.articles.order_by('-date_added')[:5]
+        return context
 
     def get_queryset(self):
-        self.query = Article.objects.filter(category__iexact='django').order_by('-date_added')
-        return self.query
+        return Article.objects.filter(category__title=self.kwargs['title']).order_by('-date_added')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['django_latest'] = Article.objects.filter(category__iexact='django').order_by('-date_added')[:4]
-        return context
-
-class PythonArticleList(ListView):
+class ArticleTagView(ListView):
     model = Article
-    context_object_name = 'python_list'
-    template_name = 'articles/python_article_list.html'
-    paginate_by = 8
+    template_name = 'tag.html'
+    context_object_name = 'article_tags'
 
     def get_queryset(self):
-        self.query = Article.objects.filter(category__iexact='python').order_by('-date_added')
-        return self.query
+        return Article.objects.filter(tags__slug=self.kwargs['name'])
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['python_latest'] = Article.objects.filter(category__iexact='python').order_by('-date_added')[:4]
-        return context
-
-
-class OtherArticleList(ListView):
-    model = Article
-    context_object_name = 'other_list'
-    template_name = 'articles/other_article_list.html'
-    paginate_by = 8
-
-    def get_queryset(self):
-        self.query = Article.objects.filter(category__iexact='other').order_by('-date_added')
-        return self.query
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['other_latest'] = Article.objects.filter(category__iexact='other').order_by('-date_added')[:4]
-        return context
-
+        
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'articles/article_detail.html'
     query_pk_and_slug = True
-    slug_field = 'slug__iexact'
-    
 
         
 
 class ArticleCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Article
+    form_class = ArticleCreateForm
     template_name = 'articles/article_new.html'
-    fields = ['category', 'title', 'body']
     login_url = 'login'
     success_message = 'Article created successfully'
 
@@ -94,11 +71,11 @@ class ArticleCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
 class ArticleUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Article
+    form_class = ArticleUpdateForm
     template_name = 'articles/article_update.html'
-    fields = ['title', 'body']
+    context_object_name = 'article'
     login_url = 'login'
     query_pk_and_slug =True
-    slug_field = 'slug__iexact'
     success_message = 'Article updated successfully'
     
     
@@ -118,8 +95,8 @@ class ArticleDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = 'articles/article_delete.html'
     success_url = reverse_lazy('articles:article_lists')
     login_url = 'login'
+    context_object_name = 'article'
     query_pk_and_slug = True
-    slug_field = 'slug__iexact'
     success_message = 'Article deleted successfully'
     
     
@@ -132,9 +109,23 @@ class ArticleDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
 
 
-
-
+class SearchView(ListView):
+    model = Article
+    context_object_name = 'search_list'
+    template_name = 'search.html'
     
+    def get_queryset(self):
+        query = self.request.GET.get('q', None)
+        if query is None :
+            return query
+        elif query == '':
+            return []
+        else:
+            search_list = Article.objects.filter(
+                Q(title__icontains=query) | Q(body__icontains=query)
+            )
+            return search_list
+
 
 
 

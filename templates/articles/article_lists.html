@@ -2,43 +2,83 @@
 {% load static %}
 {% load comments %}
 {% load humanize %}
-{% block title %}Home{% endblock %}
+{% load read_time %}
+{% block title %}articles{% endblock %}
+
+{% block content-img %}
+<div class=" contain-img">
+    <img class="card-img-top" src="{% static 'images/pexels-photo-3023358n3.jpeg' %}" alt="Photo" width="100%">
+</div>
+{% endblock  %}  
 
 {% block content %}
-<div class="contain flex jumbotron">
-    <main role="main" class="flex-main card mb-5">
-        <h1 class="text-center card-header lead"><b>Articles</b></h1>
-        <div class="card-body border border-dark">
-            {% for article in articles %}
-            {% get_comment_count for article as comment_count %}
-                <h1 class="lead"><a class="card-title lead" href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article.title }}</a></h1>
-                <p class="card-text text-muted lead"><small><i class="fas fa-clock">  {{article.date_added|naturaltime }}</i></small></p>
-                {% if comment_count %}
-                    <p class="card-text text-muted lead"><small><i class="fas fa-comments">  {{ comment_count }} comment{{ comment_count|pluralize }} </i></small></p>
-                {% endif %}
-            {% endfor %}
-        </div>
-    </main>
-    <aside class="flex-aside mb-5">
-        <div class="mb-3">
-            <button class="btn btn-dark"><a href="{% url 'articles:article_create' %}"><i class="fa fa-plus fa-lg">New Article</i></a></button>
-        </div>
-        <div class="card mb-4">
-            <h3 class="card-header lead">Latest</h3>
-            <div class="card-body border border-dark">
-                {% for article in latest_article %}
-                    <p class="card-text lead"><a href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article }}</a></p>
-                {% endfor %}
+<div class="container max-width jumbotron">
+    <div class="row justify-content-center">
+        <main role="main" class="col-md-8 mb-5">
+            <div class="card">
+                <h1 class="text-center card-header lead"><b>Articles</b></h1>
+                <div class="card-body border border-dark">
+                    {% for article in articles %}
+                    {% get_comment_count for article as comment_count %}
+                        <div class="mb-4">
+                            <h1 class="lead"><a class="card-title lead" href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article.title }}</a></h1>
+                            <p class="card-text text-muted lead" style="display: inline;"><small><i class="fas fa-calendar-alt pr-3"> {{article.date_added|naturaltime }}</i></small></p>
+                            {% if comment_count %}
+                                <p class="card-text text-muted lead" style="display: inline;"><small><i class="fas fa-comments"> {{ comment_count }} comment{{ comment_count|pluralize }} </i></small></p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="text-center">
+                        {% if is_paginated %}
+                
+                            {% if page_obj.has_previous %}
+                                <a class="btn btn-outline-info lead" href="?page=1">First</a>
+                                <a class="btn btn-outline-info lead" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                            {% endif %}
+
+                            {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                    <a class="btn btn-info" href="?page={{ num }}">{{ num }}</a>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <a class="btn btn-outline-info lead" href="?page={{ page_obj.next_page_number }}">Next</a>  
+                                <a class="btn btn-outline-info lead " href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                            {% endif %}
+                
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="card">
-            <h3 class="card-header lead">Category</h3>
-            <div class="card-body border border-dark">
-                <h6 class="card-title lead"><a href="{% url 'articles:django_article_list' %}">Django ({{ django_category_count }})</a></h6>
-                <h6 class="card-title lead"><a href="{% url 'articles:python_article_list' %}">Python({{ python_category_count }})</a></h6>
-                <h6 class="card-title lead"><a href="{% url 'articles:other_article_list' %}">Others({{other_category_count}})</a></h6>
+        </main>
+        <aside class="col-md-4 mb-5">
+            <div class="card border border-dark mb-3">
+                <div class="card-body">
+                    <form class="form-inline" action="{% url 'articles:search' %}" method="GET"> 
+                        <input class="form-control mr-sm-2" type="text" name="q" placeholder="What are you  looking for?">
+                        <button type="submit" class="btn btn-info my-2 my-sm-0"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
             </div>
-        </div>
-    </aside>
+            <div class="card mb-4">
+                <h3 class="card-header lead">Latest Articles</h3>
+                <div class="card-body border border-dark">
+                    {% for article in latest_article %}
+                        <p class="card-text lead"><a href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article }}</a></p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="card-header lead">Categories</h3>
+                <div class="card-body border border-dark">
+                    {% for category in categories %}
+                    <h6 class="card-title lead"><a href="{% url 'articles:category_list' category.title %}">{{ category.title }}</a></h6>
+                    {% endfor %}
+                </div>
+            </div>
+        </aside>
+    </div>
 </div>
 {% endblock %}
+

@@ -1,2 +1,5 @@
-{% load md2 %} 
-{{ content|markdown:"safe, code-friendly, code-color" }}
+{% load md2 %}
+{{ autoescape off }}
+    {{ content }}
+{{ endautoescape }}
+

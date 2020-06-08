@@ -22,13 +22,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = '#p16i(40bnb$-z8d@6%tcnczczuo%jkibfe2swvmo)pby*bjx+'
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY', '#p16i(40bnb$-z8d@6%tcnczczuo%jkibfe2swvmo)pby*bjx+')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Application definition
@@ -44,22 +44,24 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.humanize',
     'rest_framework',
+    
     #markdown
-    'django_markdown2',
-    'markdown_editor',
+    'django_summernote',
+    
 
     #django_comments app
     'django_comments_xtd',
     'django_comments',
 
+    #third party app
+    'debug_toolbar',
+    'crispy_forms',
+    "taggit",
+
      #local app
     'articles',
     'accounts',
     'pages',
-     
-
-    #third party app
-    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -95,6 +98,8 @@ WSGI_APPLICATION = 'posts.wsgi.application'
 #sites_app
 SITE_ID = 1
 
+#django-taggit
+TAGGIT_CASE_INSENSITIVE = True
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -114,6 +119,9 @@ DATABASES = {
     },
 }
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -156,15 +164,28 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 AUTH_USER_MODEL = 'accounts.User'
 
 LOGIN_REDIRECT_URL = 'articles:article_lists'
 LOGOUT_REDIRECT_URL = 'pages:home'
 
+
+
+#django-summernote 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SUMMERNOTE_THEME = 'bs4'
+SUMMERNOTE_CONFIG = {
+    'width': '100%',
+    'iframe': True,
+}
+
+
 # crispy_form
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 #comments_app
 COMMENTS_APP = 'django_comments_xtd'
@@ -180,16 +201,18 @@ COMMENTS_XTD_APP_MODEL_OPTIONS = {
         'show_feedback': True,
      } 
 }
-MANAGERS = config('MANAGER', cast=Csv())
+MANAGERS = (config('MANAGER', cast=Csv(post_process=tuple)))
 
 
 #email_settings
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = config('EMAIL_HOST') 
 EMAIL_HOST_USER = config('EMAIL_HOST_USER') 
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') 
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
 
@@ -204,5 +227,5 @@ MESSAGE_TAGS = {
           
 
 
-
+CSRF_COOKIE_HTTPONLY = False
 

@@ -14,7 +14,7 @@ class ContactForm(forms.ModelForm):
         }
 
 class SubscribeForm(forms.ModelForm):
-
+    
     class Meta:
         model = Subscribe
         fields = ['email']
