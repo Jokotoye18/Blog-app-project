@@ -215,6 +215,10 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
+ADMIN = (
+    ('Jokotoye Ademola', 'jokotoyeademola95@gmail.com'),
+)
+
 
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
