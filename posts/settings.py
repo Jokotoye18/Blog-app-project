@@ -22,7 +22,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = '#p16i(40bnb$-z8d@6%tcnczczuo%jkibfe2swvmo)pby*bjx+'
-SECRET_KEY = config('SECRET_KEY', '#p16i(40bnb$-z8d@6%tcnczczuo%jkibfe2swvmo)pby*bjx+')
+SECRET_KEY = config('SECRET_KEY')
+print(SECRET_KEY)
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'crispy_forms',
     "taggit",
+    'django_filters',
 
      #local app
     'articles',

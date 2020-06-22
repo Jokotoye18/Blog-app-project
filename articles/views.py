@@ -115,19 +115,15 @@ class SearchView(ListView):
     template_name = 'search.html'
     
     def get_queryset(self):
-        query = self.request.GET.get('q', None)
-        if query is None :
-            return query
-        elif query == '':
+        queryset = Article.objects.all()
+        q = self.request.GET.get('q', None)
+        print(q)
+        if q is None :
+            return None
+        elif q == '':
             return []
         else:
-            search_list = Article.objects.filter(
-                Q(title__icontains=query) | Q(body__icontains=query)
+            search_list = queryset.filter(
+                Q(title__icontains=q) | Q(body__icontains=q)
             )
             return search_list
-
-
-
-
-
-
