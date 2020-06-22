@@ -23,7 +23,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = '#p16i(40bnb$-z8d@6%tcnczczuo%jkibfe2swvmo)pby*bjx+'
 SECRET_KEY = config('SECRET_KEY')
-print(SECRET_KEY)
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -47,7 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     
     #markdown
-    'django_summernote',
+    'markdownx',
     
 
     #django_comments app
@@ -173,16 +172,6 @@ AUTH_USER_MODEL = 'accounts.User'
 
 LOGIN_REDIRECT_URL = 'articles:article_lists'
 LOGOUT_REDIRECT_URL = 'pages:home'
-
-
-
-#django-summernote 
-X_FRAME_OPTIONS = 'SAMEORIGIN'
-SUMMERNOTE_THEME = 'bs4'
-SUMMERNOTE_CONFIG = {
-    'width': '100%',
-    'iframe': True,
-}
 
 
 # crispy_form

@@ -110,26 +110,8 @@ footer{
     margin: 1rem 0;
 }
 
-pre{
-    border-radius: 0.5rem;
-    padding: 1rem;
-}
-code{
-    border-radius: 0.5rem;
-    padding: 1rem;
-}
 .article{
     font-size: 1.3rem;
     line-height: 1.8;
 
-}
-
-
-pre{
-    padding: 1rem;
-    border-radius: 1rem;
-}
-code{
-    padding: 1rem;
-    border-radius: 1rem;
 }

@@ -12,7 +12,8 @@ urlpatterns = [
     path('', include('pages.urls')),
     path('accounts/', include('accounts.urls')),
     path('', include('articles.urls')),
-    path('summernote/', include('django_summernote.urls')),
+    path('markdownx/', include('markdownx.urls')),
+    # path('summernote/', include('django_summernote.urls')),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
 
