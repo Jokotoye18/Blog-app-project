@@ -8,7 +8,7 @@
 {% block title %}{{ article.slug }}{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container language-python">
     <main class="row justify-content-center mb-5">
         <div class="col-sm-10 col-md-10 col-lg-10">
             <div class="card ">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="card-body body-content article mb-5">
                     <div>
-                        <p class="lead">{{ article.body}}</p>
+                        <p class="">{{ article.body|safe }}</p>
                     </div>
                     {% if article.author == request.user %}
                     <div class="text-center mb-4">

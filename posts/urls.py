@@ -13,7 +13,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('', include('articles.urls')),
     path('markdownx/', include('markdownx.urls')),
-    # path('summernote/', include('django_summernote.urls')),
+    path('summernote/', include('django_summernote.urls')),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
 

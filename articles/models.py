@@ -34,7 +34,7 @@ class Article(models.Model):
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     category = models.ForeignKey(Category, related_name='articles', on_delete=models.CASCADE)
-    body = MarkdownxField()
+    body =  models.TextField() #MarkdownxField()
     tags = TaggableManager()
     TAGGIT_CASE_INSENSITIVE = True
     slug = models.SlugField(max_length=150)
@@ -59,8 +59,8 @@ class Article(models.Model):
         self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
     
-    # def get_message_as_markdown(self):
-    #     return mark_safe(markdown(self.body, safe_mode='escape'))
+    def get_message_as_markdown(self):
+        return mark_safe(markdown(self.body, safe_mode='escape'))
 
     def get_latest_article(self):
         articles = Article.objects.order_by('-date_added')[:3]
