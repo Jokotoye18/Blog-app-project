@@ -58,23 +58,23 @@ class ArticleDetailView(DetailView):
 
         
 
-class ArticleCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class ArticleCreateView(SuccessMessageMixin, CreateView):
     model = Article
     form_class = ArticleCreateForm
     template_name = 'articles/article_new.html'
-    login_url = 'login'
+    # login_url = 'login'
     success_message = 'Article created successfully'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class ArticleUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class ArticleUpdateView(SuccessMessageMixin, UpdateView):
     model = Article
     form_class = ArticleUpdateForm
     template_name = 'articles/article_update.html'
     context_object_name = 'article'
-    login_url = 'login'
+    # login_url = 'login'
     query_pk_and_slug =True
     success_message = 'Article updated successfully'
     
@@ -89,12 +89,12 @@ class ArticleUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 
 
-
-class ArticleDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+#LoginRequiredMixin
+class ArticleDeleteView(SuccessMessageMixin, DeleteView):
     model = Article
     template_name = 'articles/article_delete.html'
     success_url = reverse_lazy('articles:article_lists')
-    login_url = 'login'
+    # login_url = 'login'
     context_object_name = 'article'
     query_pk_and_slug = True
     success_message = 'Article deleted successfully'

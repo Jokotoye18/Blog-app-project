@@ -18,15 +18,15 @@
                         <h3><li><a href="#skills">Skills</a></li></h3>
                         <h3><li><a href="#experience">Experience</a></li></h3>
                         <h3><li><a href="#education">Education</a></li></h3>
-                        <h3><li><a href="#interests">Interests</a></li></h3>
+                        <h3><li><a href="#hobbies">Hobbies</a></li></h3>
                     </ul>
                 </div>
             </section>
             <section class="card border border-dark">
-                <div id="interests" class="card-body">
+                <div class="card-body">
                     <h3 class="card-title">Subscribe now</h3>
                     <p class="lead card-text">Subscribe to my mailing list to receive updates from the blog</p>
-                    <form action="" method="POST" novalidate>
+                    <form action="" method="POST">
                         {% csrf_token %}
                         {{form|crispy}}
                         <button type="submit" class="btn btn-secondary subscribe">subscribe</button>
@@ -44,11 +44,47 @@
         </main>
         <aside class="col-md-8">
             <section class="card border border-dark">
-                <div id="about" class="card-body">
-                    <h4 class="card-title lead border border-dark border-top-0 border-left-0 border-right-0  pb-1 push" style="display: inline;">About</h4>
+                <div id="about" class="card-body ">
+                    <h4 class="card-title lead border border-dark border-top-0 border-left-0 border-right-0  pb-1" style="display: inline;">About</h4>
+                    <p class="lead mt-3">
+                        Backend developer with experience building server-side webapps on Django and Django REST Framework. 
+                        Obsessed for impact, I've shipped under 10 robust React applications for thousands of users worldwide. 
+                        Backend enthusiast with intermediate knowledge in API design (2 deployed APIs on NodeJS). Occasional tech blogger 
+                        with more than 10k reads a month. Passionate for pixel-perfect frontend apps.
+                    </p>
+                </div>
+                <div id="skills" class="card-body">
+                    <h4 class="card-title lead border border-dark border-top-0 border-left-0 border-right-0  pb-1" style="display: inline;">Technical Skills</h4>
+                    <p class="lead mt-4" style="line-height: 3rem;">
+                        <span style="background-color: #800000;" class="mr-3 text-white rounded px-4 py-1">HTML5</span>
+                        <span style="background-color: #FF6347;" class="mr-3 text-white rounded px-4 py-1">CSS3</span>
+                        <span style="background-color: #323330 ;" class="mr-3 text-white rounded px-4 py-1">Javascript</span>
+                        <span style="background-color: #602C50;" class="mr-3 text-white rounded px-4 py-1">Bootstrap</span>
+                        <span style="background-color: #3b4d58;" class="mr-3 text-white rounded px-4 py-1">Git</span>
+                        <span style="background-color: #3E2C00;" class="mr-3 text-white rounded px-4 py-1">Github</span>
+                        <span style="background-color: #306998;" class="mr-3 text-white rounded px-4 py-1">Python</span>
+                        <span style="background-color: #092e20;" class="mr-3 text-white rounded px-4 py-1">Django</span>
+                        <span style="background-color: #ff1100;" class="mr-3 text-white rounded px-4 py-1">Django REST framework</span>
+                        <span style="background-color: #0db7ed;" class="mr-3 text-white rounded px-4 py-1">Docker</span>
+                    </p>
+                </div>
+                <div id="experience" class="card-body">
+                    <h4 class="card-title lead border border-dark border-top-0 border-left-0 border-right-0  pb-1" style="display: inline;">Experience</h4>
+                    <p class="lead mt-3">
+                        You may check my <a href="">online portfolio</a> to see the projects have worked on previously.
+                    </p>
+                </div>
+                <div id="education" class="card-body">
+                    <h4 class="card-title lead border border-dark border-top-0 border-left-0 border-right-0  pb-1" style="display: inline;">Education</h4>
                     <p class="lead mt-3"><span style="box-shadow: 3px 3px grey;">Jokotoye Ademola Akin</span>  is a Biomedical Engineering student at University of ilorin, Nigeria. He's currently in his final year 
-                        of studies and keen to pursue careers in applied programming for healthcares and biomedical industries. <br><br> Aside being a student, Jokotoye Ademola Akin
-                        is a web developer using python and Django as backend technology. He can also play very well with core frontend technology.
+                        of studies and keen to pursue careers in applied programming for healthcares and biomedical industries.
+                    </p>
+                </div>
+                <div id="hobbies" class="card-body">
+                    <h4 class="card-title lead border border-dark border-top-0 border-left-0 border-right-0 pb-1" style="display: inline;">Hobbies</h4>
+                    <p class="lead mt-4">
+                        <span class="mr-3 bg-dark text-white rounded px-4 py-1">Coding</span>
+                        <span class="mr-3 bg-dark text-white rounded px-4 py-1">Sport</span>
                     </p>
                 </div>
             </section>

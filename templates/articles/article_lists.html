@@ -6,9 +6,7 @@
 {% block title %}articles{% endblock %}
 
 {% block content-img %}
-<div class=" contain-img">
-    <img class="card-img-top" src="{% static 'images/pexels-photo-3023358n3.jpeg' %}" alt="Photo" width="100%">
-</div>
+    <img class="contain-img" style="margin-top: -3rem;" src="{% static 'images/pexels-photo-3023358n3.jpeg' %}" alt="Photo">
 {% endblock  %}  
 
 {% block content %}
@@ -57,7 +55,7 @@
                 <div class="card-body">
                     <form class="form-inline" action="{% url 'articles:search' %}" method="GET"> 
                         <input class="form-control mr-sm-2" type="text" name="q" placeholder="What are you  looking for?">
-                        <button type="submit" class="btn btn-info my-2 my-sm-0"><i class="fas fa-search"></i></button>
+                        <button type="submit" class="btn btn-info my-2 my-sm-0"><i class="fas fa-search mr-2"></i>Search</button>
                     </form>
                     <!-- <a class="nav-link" href="{% url 'articles:search' %}"><i class="fas fa-search mr-2"></i>Search</a> -->
                 </div>

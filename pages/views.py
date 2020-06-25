@@ -32,11 +32,20 @@ class HomePage(View):
     
     #template_name = 'home.html'
 
-class ContactView(SuccessMessageMixin, CreateView):
-    model = Contact
-    form_class = ContactForm
-    template_name = 'contact.html'
+class ContactView(SuccessMessageMixin, View):
     success_message = 'Your message has been received.'
+    def get(self, request, *args, **kwargs):
+        form = ContactForm()
+        context = {'form':form}
+        return render(request, 'contact.html', context)
+    def post(self, request, *args, **kwargs):
+        form = ContactForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+        messages.success(request, 'contact message received')
+        return redirect('pages:contact')
+        
+
 
 class AboutPageView(View):
     template_name = 'about.html'
@@ -58,6 +67,8 @@ class AboutPageView(View):
             messages.info(request, 'Suscribed successfully')
             form.save()
         return redirect('pages:about')
+
+
 
 
 

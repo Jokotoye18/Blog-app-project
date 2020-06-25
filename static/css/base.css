@@ -47,7 +47,7 @@ footer{
 }
 .contain-img{
     width: 100%;
-    margin-top: -5em;
+    margin-top: -3em;
 }
 footer{
     
@@ -114,4 +114,7 @@ footer{
     font-size: 1.3rem;
     line-height: 1.8;
 
+}
+ul .about{
+    list-style-type: square;
 }

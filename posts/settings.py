@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 from decouple import config, Csv
 import os
-
+import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,19 +24,21 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = '#p16i(40bnb$-z8d@6%tcnczczuo%jkibfe2swvmo)pby*bjx+'
 SECRET_KEY = config('SECRET_KEY')
-print(SECRET_KEY)
 
+ENVIRONMENT = config('ENVIRONMENT', default='production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+# ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,9 +73,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',#whitenoise
+    # 'django.middleware.cache.UpdateCacheMiddleware', #per site cache middleware
     'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware', #per site cache middleware
+    # 'csp.middleware.CSPMiddleware',#django-csp
     'django.middleware.csrf.CsrfViewMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',#debug_toolbar
+    "django.middleware.common.BrokenLinkEmailsMiddleware", #Manager
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -98,7 +106,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'posts.wsgi.application'
 
-#sites_app
+#site_app
 SITE_ID = 1
 
 #django-taggit
@@ -166,6 +174,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
@@ -175,7 +185,7 @@ AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = 'articles:article_lists'
 LOGOUT_REDIRECT_URL = 'pages:home'
 
-
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 #django-summernote 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
@@ -204,7 +214,8 @@ COMMENTS_XTD_APP_MODEL_OPTIONS = {
         'show_feedback': True,
      } 
 }
-MANAGERS = (config('MANAGER', cast=Csv(post_process=tuple)))
+
+
 
 
 #email_settings
@@ -222,6 +233,9 @@ ADMIN = (
     ('Jokotoye Ademola', 'jokotoyeademola95@gmail.com'),
 )
 
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+MANAGERS = ADMIN
 
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
@@ -232,7 +246,41 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
           
+#CSRF_COOKIE_HTTPONLY = False
 
+if ENVIRONMENT == 'production':
+    CACHE = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache', 
+            'LOCATION': '127.0.0.1:11211',
+            'OPTIONS': {
+                'server_max_value_length': 1024 * 1024 * 2,
+            }
 
-CSRF_COOKIE_HTTPONLY = False
+        }
+    }
+    
+    #HTTP Strict Transport Security (HSTS)
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 3600
+    SECURE_HSTS_PRELOAD = True
 
+    #Cross-Site Request Forgery (CSRF)
+    CSRF_COOKIE_SECURE = True  # cookie will only be sent over an HTTPS connection
+    CSRF_COOKIE_HTTPONLY = True  # only accessible through http(s) request, JS not allowed to access csrf cookies
+
+    
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_REFERRER_POLICY = 'same-origin'
+    
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    #Cross-Site Scripting (XSS)
+    SECURE_BROWSER_XSS_FILTER = True
+    SESSION_COOKIE_HTTPONLY = True
+    #django-csp(Details at official docs)
+
+django_heroku.settings(locals())

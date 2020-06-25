@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% block title %}account-signup{% endblock %}
+
 {% block content %}
-{% blocktitle %}account-signup{% endblock %}
 <div class="container">
     <div class="row justify-content-center mb-5" >
         <div class="col-sm-8 col-md-8 col-lg-6">
             <div class="card">
                 <div class="card-body">
                     <h2 class="text-center">Sign Up </h2><br>
-                    <form method="POST" novalidate>
+                    <form method="POST" >
                         {% csrf_token %}
                         {{ form|crispy }}
                         <button type="submit" class="btn btn-success btn-block">Sign Up</button>
