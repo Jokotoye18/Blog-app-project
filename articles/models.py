@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.html import mark_safe
+from markdown import markdown
 from django.conf import settings 
 from django.template.defaultfilters import slugify
 from django.urls import reverse
@@ -8,7 +10,8 @@ from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator, XtdCommentModerator
 from django.utils.html import mark_safe
 from markdown import markdown
-from markdownx.models import MarkdownxField
+from ckeditor_uploader.fields import RichTextUploadingField
+
 
 
 
@@ -34,7 +37,7 @@ class Article(models.Model):
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     category = models.ForeignKey(Category, related_name='articles', on_delete=models.CASCADE)
-    body =  models.TextField() #MarkdownxField()
+    body =  RichTextUploadingField()
     tags = TaggableManager()
     TAGGIT_CASE_INSENSITIVE = True
     slug = models.SlugField(max_length=150)
@@ -65,6 +68,9 @@ class Article(models.Model):
     def get_latest_article(self):
         articles = Article.objects.order_by('-date_added')[:3]
         return articles
+
+    def  get_body_as_markdown(self):
+        return mark_safe(markdown(self.body, safe_mode='escape'))
 
     def category_count(self):
         return Article.objects.filter(category=self).count()

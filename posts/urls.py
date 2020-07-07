@@ -10,10 +10,10 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('comments/', include('django_comments_xtd.urls')),
     path('', include('pages.urls')),
+    path('api/', include('articles.api.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('accounts/', include('accounts.urls')),
     path('', include('articles.urls')),
-    path('markdownx/', include('markdownx.urls')),
-    path('summernote/', include('django_summernote.urls')),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
 

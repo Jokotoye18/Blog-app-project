@@ -12,19 +12,13 @@
                     <h2 class="text-center">New Article</h2><br>
                     <form method="POST" >
                         {% csrf_token %}
+                        {{ form.media }}
                         {{ form|crispy }}
                         <button type="submit" class="btn btn-primary px-5">save</button>
                     </form>
-                    {{ form.media }}
                 </div>
             </div>
         </div>
     </div>
 </div>
 {% endblock %}
-
-<!-- {% block extra-js2 %} 
-    <script>
-        var simplemde = new SimpleMDE();
-    </script>
-{% endblock %} -->

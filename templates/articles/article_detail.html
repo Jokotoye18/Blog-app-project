@@ -23,16 +23,16 @@
                 </div>
                 <div class="card-body body-content article mb-5">
                     <div>
-                        <p class="">{{ article.body|safe }}</p>
+                        <p class="">{{ article.get_body_as_markdown }}</p>
                     </div>
                     {% if article.author == request.user %}
-                    <div class="text-center mb-4">
+                    <div class="text-center my-3">
                         <a class="card-link btn btn-outline-dark" href="{% url 'articles:article_update' article.slug article.pk %}">Edit</a>
                         <a class="card-link btn btn-outline-dark" href="{% url 'articles:article_delete' article.slug article.pk %}">Delete</a>
                         <a class="card-link btn btn-outline-dark" href="{% url 'articles:article_lists' %}">View all Articles</a>
                     </div>
                     {% else %}
-                    <div class="text-center mb-4">
+                    <div class="text-center my-3">
                         <a class="card-link" href="{% url 'articles:article_lists' %}">View all Articles</a>
                     </div>
                     {% endif %}

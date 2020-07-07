@@ -32,7 +32,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 # ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -48,10 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.humanize',
     
-    #markdown
-    'django_summernote',
-    'markdownx',
-    
 
     #django_comments app
     'django_comments_xtd',
@@ -62,7 +58,9 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'crispy_forms',
     "taggit",
+    'taggit_serializer',
     'django_filters',
+    'ckeditor',
 
      #local app
     'articles',
@@ -74,9 +72,9 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',#whitenoise
-    # 'django.middleware.cache.UpdateCacheMiddleware', #per site cache middleware
+    'django.middleware.cache.UpdateCacheMiddleware', #per site cache middleware
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware', #per site cache middleware
+    'django.middleware.cache.FetchFromCacheMiddleware', #per site cache middleware
     # 'csp.middleware.CSPMiddleware',#django-csp
     'django.middleware.csrf.CsrfViewMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',#debug_toolbar
@@ -111,6 +109,8 @@ SITE_ID = 1
 
 #django-taggit
 TAGGIT_CASE_INSENSITIVE = True
+
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -152,6 +152,46 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#ckeditor
+CKEDITOR_UPLOAD_PATH = "uploads/"
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+AWS_QUERYSTRING_AUTH = False
+CKEDITOR_ALLOW_NONIMAGE_FILES = False
+
+CKEDITOR_CONFIGS = {
+    # django-ckeditor defaults
+    'default': {
+        # Editor Width Adaptation
+        'skin': 'moono',
+        'width':'auto',
+        'height':'250px',
+        # tab key conversion space number
+        'tabSpaces': 4,
+        # Toolbar Style
+        'toolbar': 'Custom',
+        # Toolbar buttons
+        'toolbar_Custom': [
+            # Emotional Code Block
+            ['CodeSnippet', 'Source'], 
+            # Font Style
+            ['Bold', 'Italic', 'Underline', 'Code', 'Blockquote', 'RemoveFormat', '-'],
+            # Font color
+            ['TextColor', 'BGColor', 'Styles', 'Format', 'Font', 'Code', 'FontSize'],
+            #insert
+            ['Image', 'Table', 'Iframe'],
+            # Link link
+            ['Link', 'Unlink'],
+            # List of items
+            ['NumberedList', 'BulletedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock',],
+            # Maximization
+            ['Maximize', 'Preview', 'ShowBlocks', 'About']
+        ],
+        # Add Code Block Plug-ins
+        'extraPlugins': ','.join(['codesnippet', 'uploadimage']),
+    }
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -185,16 +225,7 @@ AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = 'articles:article_lists'
 LOGOUT_REDIRECT_URL = 'pages:home'
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-
-#django-summernote 
-X_FRAME_OPTIONS = 'SAMEORIGIN'
-SUMMERNOTE_THEME = 'bs4'
-SUMMERNOTE_CONFIG = {
-    'width': '100%',
-    'iframe': True,
-}
-
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 # crispy_form
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -227,7 +258,8 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+# DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+DEFAULT_FROM_EMAIL = 'Jokotoye18 Blog <jokotoyeademola995@gmail.com>'
 
 ADMIN = (
     ('Jokotoye Ademola', 'jokotoyeademola95@gmail.com'),
@@ -271,7 +303,6 @@ if ENVIRONMENT == 'production':
     CSRF_COOKIE_HTTPONLY = True  # only accessible through http(s) request, JS not allowed to access csrf cookies
 
     
-    X_FRAME_OPTIONS = 'DENY'
     SECURE_REFERRER_POLICY = 'same-origin'
     
     SECURE_CONTENT_TYPE_NOSNIFF = True

@@ -18,7 +18,7 @@ class ArticleListView(ListView):
     template_name = 'articles/article_lists.html'
     context_object_name = 'articles'
     queryset = Article.objects.order_by('-date_added')
-    paginate_by = 5
+    paginate_by = 1
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -30,7 +30,7 @@ class ArticleListView(ListView):
 class CategoryListView(ListView):
     context_object_name = 'category_list'
     template_name = 'articles/category_list.html'
-    paginate_by = 5
+    paginate_by = 1
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

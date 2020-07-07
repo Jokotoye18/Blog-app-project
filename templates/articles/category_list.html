@@ -21,8 +21,8 @@
                             {% endif %}
                         </div>
                     {% endfor %}
-                    <div class="my-5 text-center">
-                        <a class="card-link " href="{% url 'articles:article_lists' %}">View all Articles</a>
+                    <div class="my-3 text-center">
+                        <a class="card-link btn btn-dark" href="{% url 'articles:article_lists' %}">View all Articles</a>
                     </div>
                     <div class="text-center">
                         {% if is_paginated %}
