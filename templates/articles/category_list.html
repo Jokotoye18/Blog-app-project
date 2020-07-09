@@ -2,14 +2,14 @@
 {% load static %}
 {% load comments %}
 {% load humanize %}
-{% block title %}Category-{{category.title}}{% endblock %}
+{% block title %}Category-{{category.category}}{% endblock %}
 
 {% block content %}
 <div class="container max-width jumbotron">
     <div class="row justify-content-center">
         <main role="main" class="col-md-8 mb-5">
             <div class="card">
-                <h1 class="text-center card-header lead"><b>{{ category.title }} Articles</b></h1>
+                <h1 class="text-center card-header lead"><b>{{ category.category }} Articles</b></h1>
                 <div class="card-body border border-dark">
                     {% for article in category_list %}
                     {% get_comment_count for article as comment_count %}
@@ -51,11 +51,8 @@
             </div>
         </main>
         <aside class="col-md-4 mb-5">
-            <div class="mb-3">
-                <button class="btn btn-dark"><a href="{% url 'articles:article_create' %}"><i class="fa fa-plus fa-lg">New Article</i></a></button>
-            </div>
             <div class="card mb-4">
-                <h3 class="card-header lead">{{ category }} Latests</h3>
+                <h3 class="card-header lead">Latest Posts</h3>
                 <div class="card-body border border-dark">
                     {% for latest in articles %}
                         <p class="card-text lead"><a href="{% url 'articles:article_detail' latest.slug latest.pk %}">{{ latest }}</a></p>

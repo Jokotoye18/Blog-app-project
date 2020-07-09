@@ -30,25 +30,38 @@ class ArticleListView(ListView):
 class CategoryListView(ListView):
     context_object_name = 'category_list'
     template_name = 'articles/category_list.html'
-    paginate_by = 1
+    paginate_by = 2
+
+    def get_query(self):
+        return Article.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        category = Category.objects.filter(title=self.kwargs['title']).first()
-        context['category'] = Category.objects.filter(title=self.kwargs['title']).first()
-        context['articles'] = category.articles.order_by('-date_added')[:5]
+        context['category'] = self.get_query().filter(category__title=self.kwargs['title']).only('category__title').first()
+        context['articles'] = self.get_query().order_by('-date_added')[:5]
+        print(context['category'])
         return context
 
     def get_queryset(self):
-        return Article.objects.filter(category__title=self.kwargs['title']).order_by('-date_added')
+        return self.get_query().filter(category__title=self.kwargs['title']).order_by('-date_added')
 
 class ArticleTagView(ListView):
     model = Article
     template_name = 'tag.html'
     context_object_name = 'article_tags'
 
+    def get_query(self):
+        return super().get_queryset()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['articles'] = self.get_query().order_by('-id')
+        context['tagged'] = self.get_query().filter(tags__slug=self.kwargs['tag_slug']).only('tags__slug').first()
+        print(context['tagged'])
+        return context
+
     def get_queryset(self):
-        return Article.objects.filter(tags__slug=self.kwargs['name'])
+        return self.get_query().filter(tags__slug=self.kwargs['tag_slug']).order_by('-date_added')
 
         
 class ArticleDetailView(DetailView):

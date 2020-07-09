@@ -16,6 +16,3 @@ class ArticleUpdateForm(forms.ModelForm):
         model = Article
         fields = ['title', 'body']
 
-        widgets = {
-        }
-

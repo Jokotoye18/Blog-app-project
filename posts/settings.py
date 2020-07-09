@@ -60,8 +60,8 @@ INSTALLED_APPS = [
     "taggit",
     'taggit_serializer',
     'django_filters',
-    'ckeditor',
-
+    'martor',
+ 
      #local app
     'articles',
     'accounts',
@@ -72,9 +72,9 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',#whitenoise
-    'django.middleware.cache.UpdateCacheMiddleware', #per site cache middleware
+    # 'django.middleware.cache.UpdateCacheMiddleware', #per site cache middleware
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware', #per site cache middleware
+    # 'django.middleware.cache.FetchFromCacheMiddleware', #per site cache middleware
     # 'csp.middleware.CSPMiddleware',#django-csp
     'django.middleware.csrf.CsrfViewMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',#debug_toolbar
@@ -152,45 +152,24 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#ckeditor
-CKEDITOR_UPLOAD_PATH = "uploads/"
-X_FRAME_OPTIONS = 'SAMEORIGIN'
-CKEDITOR_IMAGE_BACKEND = "pillow"
-AWS_QUERYSTRING_AUTH = False
-CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
-CKEDITOR_CONFIGS = {
-    # django-ckeditor defaults
-    'default': {
-        # Editor Width Adaptation
-        'skin': 'moono',
-        'width':'auto',
-        'height':'250px',
-        # tab key conversion space number
-        'tabSpaces': 4,
-        # Toolbar Style
-        'toolbar': 'Custom',
-        # Toolbar buttons
-        'toolbar_Custom': [
-            # Emotional Code Block
-            ['CodeSnippet', 'Source'], 
-            # Font Style
-            ['Bold', 'Italic', 'Underline', 'Code', 'Blockquote', 'RemoveFormat', '-'],
-            # Font color
-            ['TextColor', 'BGColor', 'Styles', 'Format', 'Font', 'Code', 'FontSize'],
-            #insert
-            ['Image', 'Table', 'Iframe'],
-            # Link link
-            ['Link', 'Unlink'],
-            # List of items
-            ['NumberedList', 'BulletedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock',],
-            # Maximization
-            ['Maximize', 'Preview', 'ShowBlocks', 'About']
-        ],
-        # Add Code Block Plug-ins
-        'extraPlugins': ','.join(['codesnippet', 'uploadimage']),
-    }
+#Martor
+MARTOR_ENABLE_CONFIGS = {
+    'emoji': 'true',        # to enable/disable emoji icons.
+    'imgur': 'true',        # to enable/disable imgur/custom uploader.
+    'mention': 'false',     # to enable/disable mention
+    'jquery': 'true',       # to include/revoke jquery (require for admin default django)
+    'living': 'false',      # to enable/disable live updates in preview
+    'spellcheck': 'false',  # to enable/disable spellcheck in form textareas
+    'hljs': 'true',         # to enable/disable hljs highlighting in preview
 }
+
+# To setup the martor editor with label or not (default is False)
+MARTOR_ENABLE_LABEL = False
+
+# Imgur API Keys
+MARTOR_IMGUR_CLIENT_ID = 'e2be1ac381249b7'
+MARTOR_IMGUR_API_KEY   = 'ff5d8d9e226198ae46672a0f778a5341ec59117e'
 
 
 # Internationalization
@@ -300,7 +279,8 @@ if ENVIRONMENT == 'production':
 
     #Cross-Site Request Forgery (CSRF)
     CSRF_COOKIE_SECURE = True  # cookie will only be sent over an HTTPS connection
-    CSRF_COOKIE_HTTPONLY = True  # only accessible through http(s) request, JS not allowed to access csrf cookies
+    CSRF_COOKIE_HTTPONLY = True
+    CSRF_COOKIE_HTTPONLY = False  # only accessible through http(s) request, JS not allowed to access csrf cookies
 
     
     SECURE_REFERRER_POLICY = 'same-origin'

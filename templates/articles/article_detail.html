@@ -5,6 +5,7 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% load read_time %}
+{% load martortags %}
 {% block title %}{{ article.slug }}{% endblock %}
 
 {% block content %}
@@ -23,7 +24,7 @@
                 </div>
                 <div class="card-body body-content article mb-5">
                     <div>
-                        <p class="">{{ article.get_body_as_markdown }}</p>
+                        <p class="">{{ article.body|safe_markdown   }}</p>
                     </div>
                     {% if article.author == request.user %}
                     <div class="text-center my-3">
