@@ -9,7 +9,8 @@ from .views import (
     ArticleDeleteView, 
     CategoryListView, 
     SearchView,
-    ArticleTagView
+    ArticleTagView,
+    markdown_uploader,
 )    
 
 
@@ -24,4 +25,5 @@ urlpatterns = [
     path('article/tagged/<slug:tag_slug>/', ArticleTagView.as_view(), name='tags'),
     path('articles/', ArticleListView.as_view(), name='article_lists'),
     path('search/', SearchView.as_view(), name='search'),
+    path('api/uploader/', markdown_uploader, name='markdown_uploader_page'),
 ]

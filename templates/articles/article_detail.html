@@ -6,6 +6,7 @@
 {% load static %}
 {% load read_time %}
 {% load martortags %}
+{% load bleach %}
 {% block title %}{{ article.slug }}{% endblock %}
 
 {% block content %}
@@ -24,7 +25,7 @@
                 </div>
                 <div class="card-body body-content article mb-5">
                     <div>
-                        <p class="">{{ article.body|safe_markdown   }}</p>
+                        <p>{{ article.body|safe_markdown  }}</p>
                     </div>
                     {% if article.author == request.user %}
                     <div class="text-center my-3">
@@ -34,7 +35,7 @@
                     </div>
                     {% else %}
                     <div class="text-center my-3">
-                        <a class="card-link" href="{% url 'articles:article_lists' %}">View all Articles</a>
+                        <a class="card-link btn btn-dark" href="{% url 'articles:article_lists' %}">View all Articles</a>
                     </div>
                     {% endif %}
                     <section class="text-center mt-3">
@@ -84,7 +85,3 @@
         });
     </script>
 {% endblock %}
-
-
-
-

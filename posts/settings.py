@@ -13,6 +13,8 @@ from decouple import config, Csv
 import os
 import django_heroku
 import dj_database_url
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -34,6 +36,11 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
+sentry_sdk.init(
+    dsn=config('SENTRY_DSN'),
+    integrations=[DjangoIntegration()],
+    send_default_pii=True
+)
 
 # Application definition
 
@@ -61,6 +68,8 @@ INSTALLED_APPS = [
     'taggit_serializer',
     'django_filters',
     'martor',
+    'django_bleach',
+    'storages',
  
      #local app
     'articles',
@@ -72,9 +81,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',#whitenoise
-    # 'django.middleware.cache.UpdateCacheMiddleware', #per site cache middleware
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware', #per site cache middleware
     # 'csp.middleware.CSPMiddleware',#django-csp
     'django.middleware.csrf.CsrfViewMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',#debug_toolbar
@@ -153,25 +160,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-#Martor
-MARTOR_ENABLE_CONFIGS = {
-    'emoji': 'true',        # to enable/disable emoji icons.
-    'imgur': 'true',        # to enable/disable imgur/custom uploader.
-    'mention': 'false',     # to enable/disable mention
-    'jquery': 'true',       # to include/revoke jquery (require for admin default django)
-    'living': 'false',      # to enable/disable live updates in preview
-    'spellcheck': 'false',  # to enable/disable spellcheck in form textareas
-    'hljs': 'true',         # to enable/disable hljs highlighting in preview
-}
-
-# To setup the martor editor with label or not (default is False)
-MARTOR_ENABLE_LABEL = False
-
-# Imgur API Keys
-MARTOR_IMGUR_CLIENT_ID = 'e2be1ac381249b7'
-MARTOR_IMGUR_API_KEY   = 'ff5d8d9e226198ae46672a0f778a5341ec59117e'
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -189,7 +177,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-
+#static config
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
@@ -257,7 +245,60 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
           
-#CSRF_COOKIE_HTTPONLY = False
+
+
+# AWS config
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_QUERYSTRING_AUTH=False
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_LOCATION = 'media'
+AWS_S3_REGION_NAME = 'us-east-2' #change to your region
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+print(AWS_ACCESS_KEY_ID, AWS_DEFAULT_ACL, AWS_QUERYSTRING_AUTH, AWS_S3_FILE_OVERWRITE, AWS_S3_REGION_NAME, AWS_S3_SIGNATURE_VERSION, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME)
+
+try:				
+    from.local_settings	import * 
+except ImportError:
+    pass
+
+
+#Martor
+CSRF_COOKIE_HTTPONLY = False
+MARTOR_ENABLE_CONFIGS = {
+    'emoji': 'true',        # to enable/disable emoji icons.
+    'imgur': 'true',        # to enable/disable imgur/custom uploader.
+    'mention': 'false',     # to enable/disable mention
+    'jquery': 'true',       # to include/revoke jquery (require for admin default django)
+    'living': 'false',      # to enable/disable live updates in preview
+    'spellcheck': 'false',  # to enable/disable spellcheck in form textareas
+    'hljs': 'true',         # to enable/disable hljs highlighting in preview
+}
+
+# To setup the martor editor with label or not (default is False)
+MARTOR_ENABLE_LABEL = True
+
+# Imgur API Keys
+# MARTOR_IMGUR_CLIENT_ID = 'e2be1ac381249b7'
+# MARTOR_IMGUR_API_KEY   = 'ff5d8d9e226198ae46672a0f778a5341ec59117e'
+import time
+MARTOR_UPLOAD_PATH = 'images/uploads/'
+MARTOR_UPLOAD_URL = '/api/uploader/'  # change to local uploader
+
+# Maximum Upload Image
+# 2.5MB - 2621440
+# 5MB - 5242880
+# 10MB - 10485760
+# 20MB - 20971520
+# 50MB - 5242880
+# 100MB 104857600
+# 250MB - 214958080
+# 500MB - 429916160
+MAX_IMAGE_UPLOAD_SIZE = 5242880  # 5MB
 
 if ENVIRONMENT == 'production':
     CACHE = {
@@ -279,11 +320,10 @@ if ENVIRONMENT == 'production':
 
     #Cross-Site Request Forgery (CSRF)
     CSRF_COOKIE_SECURE = True  # cookie will only be sent over an HTTPS connection
-    CSRF_COOKIE_HTTPONLY = True
     CSRF_COOKIE_HTTPONLY = False  # only accessible through http(s) request, JS not allowed to access csrf cookies
 
     
-    SECURE_REFERRER_POLICY = 'same-origin'
+    # SECURE_REFERRER_POLICY = 'same-origin'
     
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SESSION_COOKIE_SECURE = True

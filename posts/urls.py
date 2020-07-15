@@ -10,7 +10,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('comments/', include('django_comments_xtd.urls')),
     path('', include('pages.urls')),
-    path('api/', include('articles.api.urls')),
+    # path('api/', include('articles.api.urls')),
     path('martor/', include('martor.urls')),
     path('accounts/', include('accounts.urls')),
     path('', include('articles.urls')),
@@ -19,9 +19,7 @@ urlpatterns = [
 
 if settings.DEBUG:
     import debug_toolbar
-
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
     urlpatterns = [
         path('__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
