@@ -77,6 +77,7 @@ class ArticleDetailView(DetailView):
     model = Article
     template_name = 'articles/article_detail.html'
     query_pk_and_slug = True
+    context_object_name = 'article'
 
         
 class ArticleCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):

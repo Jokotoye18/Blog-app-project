@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     #django_comments app
     'django_comments_xtd',
     'django_comments',
+    'django_markdown2',
 
     #third party app
     'rest_framework',
@@ -200,7 +201,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 #comments_app
 COMMENTS_APP = 'django_comments_xtd'
-COMMENTS_XTD_MAX_THREAD_LEVEL = 8
+COMMENTS_XTD_MAX_THREAD_LEVEL = 4
 COMMENTS_XTD_COMFIRM_EMAIL = True
 COMMENTS_XTD_SALT = (b"Timendi causa est nescire. " b"Aequam memento rebus in arduis servare mentem.")
 COMMENTS_XTD_SEND_HTML_EMAIL = True 

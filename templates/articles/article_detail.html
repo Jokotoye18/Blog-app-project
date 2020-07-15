@@ -43,7 +43,7 @@
                     </section>
                     <section>
                         <div >
-                            Tagged:
+                            Tags:
                             {% for tag in article.tags.all %}
                               <span class="badge badge-info px-2"><a class="text-white" href="{% url 'articles:tags' tag.slug %}">{{ tag }}</a></span>
                             {% endfor %}
