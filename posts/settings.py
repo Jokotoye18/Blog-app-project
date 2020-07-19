@@ -62,12 +62,23 @@ INSTALLED_APPS = [
     'django_markdown2',
 
     #third party app
+    #API
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'drf_yasg',
+    'taggit_serializer',
+    'django_filters',
+
+
+    #others
     'debug_toolbar',
     'crispy_forms',
     "taggit",
-    'taggit_serializer',
-    'django_filters',
     'martor',
     'django_bleach',
     'storages',
@@ -340,3 +351,12 @@ if ENVIRONMENT == 'production':
     #django-csp(Details at official docs)
 
 django_heroku.settings(locals())
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASSES': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}

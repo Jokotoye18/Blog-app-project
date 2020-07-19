@@ -11,6 +11,7 @@ from django_comments_xtd.moderation import moderator, XtdCommentModerator
 from martor.models import MartorField
 from django.utils.html import mark_safe
 from markdown import markdown
+from rest_auth import serializers
 
 
 
@@ -48,7 +49,7 @@ class Article(models.Model):
     objects = models.Manager() 
 
     class Meta:
-        ordering = ['title']
+        ordering = ['-date_added']
 
     def __str__(self):
         return self.title

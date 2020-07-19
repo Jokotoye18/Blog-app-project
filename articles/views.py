@@ -128,25 +128,23 @@ class ArticleDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
               raise PermissionDenied 
         return super().dispatch(request, *args, **kwargs)
 
-class SearchView(ListView):
-    model = Article
-    context_object_name = 'search_list'
-    template_name = 'search.html'
-    
-    def get_queryset(self):
-        queryset = Article.objects.all()
-        q = self.request.GET.get('q', None)
-        if q is None :
-            return None
-        elif  q  :
-            return []
+class SearchView(View):
+    def get(self, request, *args, **kwargs):
+        articles = Article.objects.all()
+        q = request.GET.get('q', None)
+        if q is None:
+            search_list = None
+        elif not q:
+            search_list = []
         else:
-            search_list = queryset.filter(
-                Q(title__icontains=q) | Q(body__icontains=q)
+            search_list = articles.filter(
+                Q(title__icontains=q)
             )
-            return search_list
 
-
+        context = {'search_list': search_list}
+        return render(request, 'search.html', context)
+    
+    
 @login_required
 def markdown_uploader(request):
     """
