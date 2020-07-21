@@ -4,7 +4,7 @@ import django from 'django';
 import md5 from 'md5';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Remarkable } from 'remarkable';
+import Remarkable from 'remarkable';
 
 import * as lib from './lib.js';
 
@@ -202,12 +202,9 @@ export class CommentForm extends React.Component {
 
   render_field_followup() {
     let label = django.gettext("Notify me about follow-up comments"),
-        label_cssc = "custom-control-label",
-        elem_id = "id_followup";
-    if(this.state.reply_to > 0) {
-        label_cssc += " small";
-        elem_id += `_${this.state.reply_to}`;
-    }
+        label_cssc = "custom-control-label";
+    if(this.state.reply_to > 0)
+      label_cssc += " small";
     return (
       <div className="form-group row">
         <div className="offset-md-3 col-md-7">
@@ -215,8 +212,8 @@ export class CommentForm extends React.Component {
             <input className="custom-control-input" type="checkbox"
                    checked={this.state.followup}
                    onChange={this.handle_input_change}
-                   name="followup" id={elem_id} />
-            <label className={label_cssc} htmlFor={elem_id}>
+                   name="followup" id="id_followup" />
+            <label className={label_cssc} htmlFor="id_followup">
               &nbsp;{label}
             </label>
           </div>
@@ -319,7 +316,7 @@ export class CommentForm extends React.Component {
 
     // Build Gravatar.
     const hash = md5(this.state.email.toLowerCase());
-    const avatar_url = "//www.gravatar.com/avatar/"+hash+"?s=48&d=mm";
+    const avatar_url = "http://www.gravatar.com/avatar/"+hash+"?s=48&d=mm";
     const avatar_img = <img className="mr-3" src={avatar_url}
                             height="48" width="48"/>;
     

@@ -7,6 +7,10 @@
     box-sizing:	border-box; 
 }
 
+a.active{
+    background-color: black;
+    border-radius: 0.3em;
+}
 
 .head a:hover{
     background-color: black;
@@ -117,4 +121,13 @@ footer{
 }
 ul .about{
     list-style-type: square;
+}
+
+code{
+    background-color: whitesmoke;
+    border: 1px solid #E8E8E8;
+    padding: 1px 5px;
+}
+pre{
+    border: 1px solid #E8E8E8;
 }

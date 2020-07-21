@@ -93,7 +93,9 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',#whitenoise
+    # 'django.middleware.cache.UpdateCacheMiddleware',#cache
     'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware', #cache
     # 'csp.middleware.CSPMiddleware',#django-csp
     'django.middleware.csrf.CsrfViewMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',#debug_toolbar
@@ -149,9 +151,9 @@ DATABASES = {
     },
 }
 
-DATABASE_URL = config('DATABASE_URL')
-db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
-DATABASES['default'].update(db_from_env)
+# DATABASE_URL = config('DATABASE_URL')
+# db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+# DATABASES['default'].update(db_from_env)
 
 INTERNAL_IPS = [
     '127.0.0.1',
@@ -316,8 +318,8 @@ MARTOR_UPLOAD_URL = '/api/uploader/'  # change to local uploader
 # 500MB - 429916160
 MAX_IMAGE_UPLOAD_SIZE = 5242880  # 5MB
 
-if ENVIRONMENT == 'production':
-    CACHE = {
+
+CACHE = {
         'default': {
             'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache', 
             'LOCATION': '127.0.0.1:11211',
@@ -327,6 +329,14 @@ if ENVIRONMENT == 'production':
 
         }
     }
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 600   
+CACHE_MIDDLEWARE_KEY_PREFIX = '' 
+
+
+
+if ENVIRONMENT == 'production':
     
     #HTTP Strict Transport Security (HSTS)
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
@@ -350,12 +360,12 @@ if ENVIRONMENT == 'production':
     SESSION_COOKIE_HTTPONLY = True
     #django-csp(Details at official docs)
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASSES': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
+    # 'DEFAULT_PAGINATION_CLASSES': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],

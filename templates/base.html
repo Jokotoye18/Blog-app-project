@@ -27,7 +27,7 @@
                 <span class="navbar-toggler-icon"></span> 
             </button> 
             <div class="collapse navbar-collapse" id="navbarCollapse">  
-                <ul class="navbar-nav mr-auto mt-1 head">
+                <ul id="active" class="navbar-nav mr-auto mt-1 head">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'articles:article_lists' %}">Blog</a>
                     </li>
@@ -41,7 +41,7 @@
                         <a class="nav-link" href="https://jokotoye-blog.s3.us-east-2.amazonaws.com/Jokotoye-Ademola-Akin.pdf">Resume<i class="fas fa-download ml-1"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Portfolio</a>
+                        <a class="nav-link" target="_blank" href="https://jokotoye18-portfolio.herokuapp.com/">Portfolio</a>
                     </li>
                 </ul>
                 {% if user.is_authenticated %}
@@ -81,10 +81,8 @@
     {% block content %}
     {% endblock content %}
     <div class=" d-flex my-4 justify-content-center social position fixed">
-        <a  href=""><i class="fab fa-facebook-f  mx-3 facebook"></i></a>
-        <a  href=""><i class="fab fa-instagram  mx-3 instagram"></i></a>
-        <a  href=""><i class="fab fa-linkedin  mx-3 linkedin"></i></a>
-        <a  href=""><i class="fab fa-twitter  mx-3 twitter"></i></a>
+        <a  href="https://www.linkedin.com/in/jokotoye-ademola-akin-12b539175/" target="_blank"><i class="fab fa-linkedin  mx-3 linkedin"></i></a>
+        <a  href="https://twitter.com/AkinJokotoye" target="_blank"><i class="fab fa-twitter  mx-3 twitter"></i></a>
         <a  href="{% url 'pages:contact' %}"><i class="fas fa-envelope mx-3 contact"></i></a>
     </div>
     <footer class="text-center py-2">

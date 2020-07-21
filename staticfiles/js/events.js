@@ -7,8 +7,10 @@ const contact = document.querySelector('.contact');
 const about = document.querySelector(".about");
 const contact_btn = document.querySelector(".contact-btn")
 const subscribe = document.querySelector(".subscribe")
+const active = document.querySelectorAll('.nav-link')
+console.log(active.length)
 
-for (let i = 0; i < social.length; i++){
+for (let i = 0; i < social.length; i++) {
     social[i].addEventListener("mouseover", function(){
         social[i].classList.add("fa-3x");
     })
@@ -34,12 +36,9 @@ contact.addEventListener("mouseout", () => contact.classList.remove("contact-col
 
 about.addEventListener("mouseover", () => about.classList.add("about-img"));
 about.addEventListener("mouseout", () => about.classList.remove("about-img"));
-
 contact_btn.addEventListener("mouseover", () => contact_btn.classList.add("btn-lg"));
 contact_btn.addEventListener("mouseout", () => contact_btn.classList.remove("btn-lg"));
 
 subscribe.addEventListener("mouseover", () => subscribe.classList.add("btn-lg"));
 subscribe.addEventListener("mouseout", () => subscribe.classList.remove("btn-lg"));
-
-
 
