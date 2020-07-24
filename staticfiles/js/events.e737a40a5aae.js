@@ -10,11 +10,7 @@ const subscribe = document.querySelector(".subscribe");
 const active = document.querySelectorAll('.nav-link');
 const contactMessage = document.querySelector('#id_message');
 
-console.log(contactMessage);
-
-contactMessage.addEventListener('change', function() {
-    console.log(contactMessage.value)
-})
+console.log(contactMessage)
 
 console.log(active.length)
 

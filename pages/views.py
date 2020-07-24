@@ -18,6 +18,7 @@ class HomePage(View):
     def post(self, request, *args, **kwargs):
         form = SubscribeForm(request.POST)
         if form.is_valid():
+            form.save()
             to_email = request.POST['email']
             subject = 'Subscription Form Received'
             from_email = settings.DEFAULT_FROM_EMAIL
@@ -25,24 +26,36 @@ class HomePage(View):
             subscribe_message = f'{to_email}! Thanks for subscribing to our newsletter. We promise to always update you on our next post.'
             send_mail(subject, subscribe_message, from_email, to_email, fail_silently=True)
             messages.info(request, 'Suscribed successfully')
-            form.save()
+            return redirect('pages:home')
+        messages.error(request, 'Invalid Input! Try again.')
         return redirect('pages:home')
 
     
     
     #template_name = 'home.html'
 
-class ContactView(SuccessMessageMixin, View):
-    success_message = 'Your message has been received.'
+class ContactView(View):
     def get(self, request, *args, **kwargs):
         form = ContactForm()
         context = {'form':form}
         return render(request, 'contact.html', context)
+
     def post(self, request, *args, **kwargs):
         form = ContactForm(data=request.POST)
         if form.is_valid():
             form.save()
-        messages.success(request, 'contact message received')
+            to_email = 'jokotoyeademola95@gmail.com'
+            sender_email = request.POST['email']
+            name = request.POST['name']
+            message = request.POST['message']
+            subscribe_message = f'Hi Jokotoye Ademola, {name} has contacted you via your blog website saying \'{message}\'. You may want to reply to {sender_email}.'
+            subject = 'Contact message received'
+            from_email = settings.DEFAULT_FROM_EMAIL
+            to_email = [to_email]
+            send_mail(subject, subscribe_message, from_email, to_email, fail_silently=True)
+            messages.success(request, 'contact message received')
+            return redirect('pages:contact')
+        messages.error(request, 'Invalid Input! Try again.')
         return redirect('pages:contact')
         
 
@@ -58,6 +71,7 @@ class AboutPageView(View):
     def post(self, request, *args, **kwargs):
         form = SubscribeForm(request.POST)
         if form.is_valid():
+            form.save()
             to_email = request.POST['email']
             subject = 'Subscription Form Received'
             from_email = settings.DEFAULT_FROM_EMAIL
@@ -65,7 +79,8 @@ class AboutPageView(View):
             subscribe_message = f'{to_email}! Thanks for subscribing to our newsletter. We promise to always update you on our next post.'
             send_mail(subject, subscribe_message, from_email, to_email, fail_silently=True)
             messages.info(request, 'Suscribed successfully')
-            form.save()
+            return redirect('pages:about')
+        messages.error(request, 'Invalid Input! Try again.')
         return redirect('pages:about')
 
 
