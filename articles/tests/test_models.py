@@ -1,12 +1,12 @@
-from django.test import TestCase,Client
+from django.test import TestCase, Client
 from  articles.models import  Article, Category
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
 
-class ArticleModelViewTest(TestCase):
-    
+class TestArticleModels(TestCase):
     def setUp(self):
+        self.client = Client()
         self.category = Category.objects.create(
             title = 'category test'
         )
@@ -22,6 +22,7 @@ class ArticleModelViewTest(TestCase):
             title = 'New article',
             body = 'Article body',
             category = self.category,
+            tags = ['design', 'coding']
         )
 
     def test_string_represention(self):
@@ -40,16 +41,16 @@ class ArticleModelViewTest(TestCase):
 
 
 
-class CategoryModelViewTest(TestCase):
+# class CategoryModelViewTest(TestCase):
     
-    def setUp(self):
-        self.category = Category.objects.create(
-            title = 'Test category',
-        )
+#     def setUp(self):
+#         self.category = Category.objects.create(
+#             title = 'Test category',
+#         )
 
-    def test_string_represention(self):
-        self.assertEqual(str(self.category), 'Test category')
+#     def test_string_represention(self):
+#         self.assertEqual(str(self.category), 'Test category')
 
 
-    def test_article_content(self):
-        self.assertEqual(f'{self.category.title}', 'Test category')
+#     def test_article_content(self):
+#         self.assertEqual(f'{self.category.title}', 'Test category')

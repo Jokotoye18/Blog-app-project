@@ -33,7 +33,7 @@ class ArticleListView(ListView):
     template_name = 'articles/article_lists.html'
     context_object_name = 'articles'
     queryset = Article.objects.order_by('-date_added')
-    paginate_by = 1
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -48,13 +48,14 @@ class CategoryListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Article.objects.filter(category__title=self.kwargs['title']).order_by('-date_added')
+        articles = Article.objects.select_related('category')
+        return articles.filter(category__title=self.kwargs['title']).order_by('-date_added')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        categories = self.get_queryset().filter(category__title=self.kwargs['title'])
+        categories = self.get_queryset()
         context['category'] = categories.only('category__title').first()
-        context['articles'] = Article.objects.order_by('-date_added')[:5]
+        context['articles'] = Article.objects.select_related('author', 'category').prefetch_related('tags').order_by('-date_added')[:5]
         return context
 
     
@@ -63,6 +64,7 @@ class ArticleTagView(ListView):
     model = Article
     template_name = 'tag.html'
     context_object_name = 'article_tags'
+    paginate_by = 10
 
     def get_queryset(self):
         return Article.objects.filter(tags__slug=self.kwargs['tag_slug']).order_by('-date_added')
@@ -78,6 +80,10 @@ class ArticleDetailView(DetailView):
     template_name = 'articles/article_detail.html'
     query_pk_and_slug = True
     context_object_name = 'article'
+
+    def get_object(self):
+        return get_object_or_404(Article.objects.select_related('category', 'author').prefetch_related('tags'), 
+                                    slug=self.kwargs.get('slug'), pk=self.kwargs.get('pk'))
 
         
 class ArticleCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
