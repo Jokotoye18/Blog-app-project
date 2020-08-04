@@ -33,7 +33,7 @@ class Category(models.Model):
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(published=True)
+        return super().get_queryset()
 
 
 class Article(models.Model):
@@ -51,7 +51,6 @@ class Article(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     objects = PublishedManager()
-
     class Meta:
         ordering = ["-date_added"]
 
