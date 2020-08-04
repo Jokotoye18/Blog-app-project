@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.humanize',
     
+    
 
     #django_comments app
     'django_comments_xtd',
