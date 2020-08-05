@@ -33,10 +33,15 @@ class Category(models.Model):
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset()
+        return super().get_queryset().filter(published='P')
 
 
 class Article(models.Model):
+    PUBLISHED_CATAGORIES = (
+       ('P', 'Published'),
+       ('D', 'Draft'),
+    )
+
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     title = models.CharField(max_length=150, unique=True)
     category = models.ForeignKey(
@@ -45,12 +50,13 @@ class Article(models.Model):
     body = MartorField()
     tags = TaggableManager()
     TAGGIT_CASE_INSENSITIVE = True
-    published = models.BooleanField(default=False)
+    published = models.CharField(choices=PUBLISHED_CATAGORIES, default='P', max_length=1)
     slug = models.SlugField(max_length=150, unique=True)
     date_added = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
     objects = PublishedManager()
+
     class Meta:
         ordering = ["-date_added"]
 
