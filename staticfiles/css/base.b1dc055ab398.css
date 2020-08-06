@@ -5,6 +5,16 @@
 *,	*:before,	*:after	{		
     box-sizing:	border-box; 
 }
+a {
+    color: #212529 !important;
+}
+a:hover() {
+    color: black !important;
+}
+
+li a{
+    color: #ffffff !important;
+}
 
 a.active{
     background-color: black;
@@ -131,13 +141,7 @@ pre{
     border: 1px solid #E8E8E8;
 }
 
-a.read-more:hover {
-    background-color: #212529;
-    color: #ffffff;
-}
-.article a{
-    color: #212529;
-}
-.article a:hover{
-    font-weight: 600;
+a.read-more:hover{
+    background-color: #212529 !important;
+    color: #ffffff !important;
 }

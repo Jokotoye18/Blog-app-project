@@ -131,13 +131,6 @@ pre{
     border: 1px solid #E8E8E8;
 }
 
-a.read-more:hover {
-    background-color: #212529;
-    color: #ffffff;
-}
-.article a{
+.read-more{
     color: #212529;
-}
-.article a:hover{
-    font-weight: 600;
 }

@@ -30,13 +30,18 @@ from martor.utils import LazyEncoder
 class ArticleListView(ListView):
     template_name = "articles/article_lists.html"
     context_object_name = "articles"
-    queryset = Article.objects.order_by("-date_added")
+    queryset = (
+        Article.objects.select_related('author', "category")
+        .prefetch_related("tags")
+        .filter(published="P")
+        .order_by("-date_added")
+    )
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.order_by("title")
-        context["latest_article"] = self.get_queryset()[:5]
+        context["latest_article"] = self.queryset[:5]
         return context
 
 
@@ -46,8 +51,8 @@ class CategoryListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        articles = Article.objects.select_related("category")
-        return articles.filter(category__title=self.kwargs["title"]).order_by(
+        articles = Article.objects.select_related("category").prefetch_related("tags")
+        return articles.filter(category__title=self.kwargs["title"], published="P").order_by(
             "-date_added"
         )
 
@@ -55,14 +60,14 @@ class CategoryListView(ListView):
         context = super().get_context_data(**kwargs)
         categories = self.get_queryset()
         context["category"] = categories.only("category__title").first()
-        context["articles"] = (
+        context["latest_articles"] = (
             Article.objects.select_related("author", "category")
-            .prefetch_related("tags")
+            .prefetch_related("tags").filter(published="P")
             .order_by("-date_added")[:5]
         )
         return context
 
-        
+
 class ArticleTagView(ListView):
     model = Article
     template_name = "tag.html"
@@ -76,13 +81,17 @@ class ArticleTagView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["articles"] = Article.objects.order_by("-date_added")[:5]
-        context["tagged"] = (
-            self.get_queryset()
-            .filter(tags__slug__icontains=self.kwargs["tag_slug"])
-            .only("tags__slug")
-            .first()
+        context["latest_articles"] = (
+            Article.objects.select_related("author", "category")
+            .prefetch_related("tags").filter(published="P")
+            .order_by("-date_added")[:5]
         )
+        # context["tagged"] = (
+        #     self.get_queryset()
+        #     .filter(tags__slug__icontains=self.kwargs["tag_slug"])
+        #     .only("tags__slug")
+        #     .first()
+        # )
         return context
 
 

@@ -46,9 +46,9 @@
                 </ul>
                 {% if user.is_authenticated %}
                 <ul class="navbar-nav mr-2">
-                    <li class="nav-item">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle btn btn-secondary" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user mr-2"></i>{{ user.username }}</a> 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                        <div class="dropdown-menu dropdown-menu-right dropdown" aria-labelledby="userMenu">
                             <a class="dropdown-item" href="{% url 'password_change'%}">Change password</a> 
                             <a class="dropdown-item" href="{% url 'accounts:account_update' request.user.username %}">Account Update</a>
                             <div class="dropdown-divider"></div> 
@@ -80,7 +80,7 @@
     
     {% block content %}
     {% endblock content %}
-    <div class=" d-flex my-4 justify-content-center social position fixed">
+    <div class=" d-flex my-4 justify-content-center social position fixed article">
         <a  href="https://www.linkedin.com/in/jokotoye-ademola-akin-12b539175/" target="_blank"><i class="fab fa-linkedin  mx-3 linkedin"></i></a>
         <a  href="https://twitter.com/AkinJokotoye" target="_blank"><i class="fab fa-twitter  mx-3 twitter"></i></a>
         <a  href="{% url 'pages:contact' %}"><i class="fas fa-envelope mx-3 contact"></i></a>

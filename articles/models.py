@@ -31,10 +31,6 @@ class Category(models.Model):
         return self.title
 
 
-class PublishedManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(published='P')
-
 
 class Article(models.Model):
     PUBLISHED_CATAGORIES = (
@@ -49,13 +45,14 @@ class Article(models.Model):
     )
     body = MartorField()
     tags = TaggableManager()
+    image = models.ImageField(upload_to='article/pics', default='django.png')
     TAGGIT_CASE_INSENSITIVE = True
-    published = models.CharField(choices=PUBLISHED_CATAGORIES, default='P', max_length=1)
+    published = models.CharField(choices=PUBLISHED_CATAGORIES, default='D', max_length=1)
     slug = models.SlugField(max_length=150, unique=True)
     date_added = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
-    objects = PublishedManager()
+    objects = models.Manager()
 
     class Meta:
         ordering = ["-date_added"]
@@ -63,12 +60,13 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return reverse("articles:article_detail", args=[self.slug, (self.pk)])
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("articles:article_detail", args=[self.slug, (self.pk)])
 
     def get_body_as_markdown(self):
         return mark_safe(markdown(self.body, safe_mode="escape"))

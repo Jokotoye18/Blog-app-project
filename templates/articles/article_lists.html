@@ -18,12 +18,20 @@
                 <div class="card-body border border-dark">
                     {% for article in articles %}
                     {% get_comment_count for article as comment_count %}
-                        <div class="mb-4">
-                            <h1 class="lead"><a class="card-title lead" href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article.title }}</a></h1>
-                            <p class="card-text text-muted lead" style="display: inline;"><small><i class="fas fa-calendar-alt pr-3"> {{article.date_added|naturaltime }}</i></small></p>
-                            {% if comment_count %}
-                                <p class="card-text text-muted lead" style="display: inline;"><small><i class="fas fa-comments"> {{ comment_count }} comment{{ comment_count|pluralize }} </i></small></p>
-                            {% endif %}
+                        <div class="mb-4 row justify-content-between article">
+                            <div class="col-md-4">
+                                <a href="{% url 'articles:article_detail' article.slug article.pk %}"><img width="100%" src="{{ article.image.url }}" alt="{{ article.image.name }}"></a>
+                            </div>
+                            <div class="col-md-8">
+                                <h1 class="lead"><a class="card-title lead"  href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article.title }}</a></h1>
+                                <p class="card-text text-muted lead" style="display: inline;"><i class="fas fa-calendar-alt pr-3"> {{article.date_added|naturaltime }}</i></p>
+                                {% if comment_count %}
+                                    <p class="card-text text-muted lead" style="display: inline;"><i class="fas fa-comments"> {{ comment_count }} comment{{ comment_count|pluralize }} </i></p>
+                                {% endif %}
+                                <hr>
+                                <p class="lead">{{ article.body|truncatewords:20 }}</p>
+                                <a class="btn d-block read-more" href="{% url 'articles:article_detail' article.slug article.pk %}">Read More</a>
+                            </div>
                         </div>
                     {% endfor %}
                     <div class="text-center">
@@ -63,13 +71,20 @@
                 <h3 class="card-header lead">Latest Articles</h3>
                 <div class="card-body border border-dark">
                     {% for article in latest_article %}
-                        <p class="card-text lead"><a href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article }}</a></p>
+                    <div class="row justify-content-between article mb-3">
+                        <div class="col-4">
+                            <a href="{% url 'articles:article_detail' article.slug article.pk %}"><img width="100%" src="{{ article.image.url }}" alt="{{ article.image.name }}"></a>
+                        </div>
+                        <div class="col-8">
+                            <p class="card-text lead"><a href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article }}</a></p>
+                        </div>
+                    </div>
                     {% endfor %}
                 </div>
             </div>
             <div class="card">
                 <h3 class="card-header lead">Categories</h3>
-                <div class="card-body border border-dark">
+                <div class="card-body border border-dark article">
                     {% for category in categories %}
                     <h6 class="card-title lead"><a href="{% url 'articles:category_list' category.title %}">{{ category.title }}</a></h6>
                     {% endfor %}

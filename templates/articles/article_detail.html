@@ -14,8 +14,9 @@
     <main class="row justify-content-center mb-5">
         <div class="col-sm-10 col-md-10 col-lg-10">
             <div class="card ">
+                <img src="{{ article.image.url }}" alt="{{ article.image.name }}" width="100%">
                 <div class="card-header text-center">
-                    <div class="mb-2">
+                    <div class="my-2">
                         <h3 class="card-title"><strong>{{article.title }}</strong></h3>
                         {% for tag in article.tags.all %}
                         <span class="badge badge-info px-2"><a class="text-white" href="{% url 'articles:tags' tag.slug %}">{{ tag }}</a></span>
