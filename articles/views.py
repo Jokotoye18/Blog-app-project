@@ -110,6 +110,14 @@ class ArticleDetailView(DetailView):
             pk=self.kwargs.get("pk"),
         )
 
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     object_tags = self.get_object().tags.values_list('name', flat=True)
+    #     print(object_tags)
+    #     articles = Article.objects.select_related('author', 'category').prefetch_related('tags')
+    #     context['related_articles'] = articles.filter(published='P', tags__name__in=object_tags).distinct()[:3]
+    #     return context
+
 
 class ArticleCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Article
