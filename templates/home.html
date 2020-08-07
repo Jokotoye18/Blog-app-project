@@ -3,7 +3,12 @@
 {% load crispy_forms_tags %}
 
 {% block content-img %}
-    <img class="contain-img" style="margin-top: -3rem;" src="{% static 'images/pexels-photo-3023358n3.jpeg' %}" alt="Photo">
+    <div class="img-container">
+        <img class="contain-img" src="{% static 'images/pexels-photo-3023358n3.jpeg' %}" alt="Photo">
+        <div class="centered">
+            <h1 class="bold">Welcome to <br><span>Jokotoye Ademola Blog</span></h1>
+        </div>
+    </div>
 {% endblock  %}   
 
 {% block content %}

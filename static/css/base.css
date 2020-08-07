@@ -32,7 +32,7 @@ section ul a:hover{
     display: none;
 }
 header{
-    background: rgb(33, 48, 56);
+    background: rgb(33, 48, 56, 0.9);
     width: 100%;
 }
 footer{
@@ -51,6 +51,7 @@ footer{
 .contain-img{
     width: 100%;
     margin-top: -3em;
+    opacity: 0.9;
 }
 footer{
     
@@ -140,4 +141,18 @@ a.read-more:hover {
 }
 .article a:hover{
     font-weight: 600;
+}
+.img-container{
+    position: relative;
+    text-align: center;
+    color: #000000;
+}
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.bold{
+    font-weight: bolder;
 }

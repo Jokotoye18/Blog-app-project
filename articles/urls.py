@@ -1,6 +1,7 @@
 from django.urls import path
+
+from .feed import ArticlesFeed
 from .models import Article
-from .import views
 from .views import (
     ArticleListView, 
     ArticleDetailView, 
@@ -26,4 +27,5 @@ urlpatterns = [
     path('article/tags/<slug:tag_slug>/', ArticleTagView.as_view(), name='tags'),
     path('search/', SearchView.as_view(), name='search'),
     path('api/uploader/', markdown_uploader, name='markdown_uploader_page'),
+    path('feed/rss/', ArticlesFeed(), name='articles_feed')
 ]

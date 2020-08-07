@@ -11,10 +11,10 @@ const active = document.querySelectorAll('.nav-link')
 
 for (let i = 0; i < social.length; i++) {
     social[i].addEventListener("mouseover", function(){
-        social[i].classList.add("fa-2x");
+        social[i].classList.add("fa-1x");
     })
     social[i].addEventListener("mouseout", function(){
-        social[i].classList.remove("fa-2x");
+        social[i].classList.remove("fa-1x");
     })
 }
 
