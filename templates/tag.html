@@ -24,7 +24,6 @@
                                 <p class="card-text text-muted lead" style="display: inline;"><i class="fas fa-comments"> {{ comment_count }} comment{{ comment_count|pluralize }} </i></p>
                             {% endif %}
                             <hr>
-                            <p class="lead">{{ article.body|truncatewords:20 }}</p>
                             <a class="btn d-block read-more" href="{% url 'articles:article_detail' article.slug article.pk %}">Read More</a>
                         </div>
                     </div>

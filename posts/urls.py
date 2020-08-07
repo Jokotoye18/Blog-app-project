@@ -8,7 +8,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from articles.sitemap import ArticleSitemap
+from articles.sitemap import ArticleSitemap, StaticViewSitemap
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -24,7 +24,8 @@ schema_view = get_schema_view(
 
 
 sitemaps = {
-    'article': ArticleSitemap, 
+    'article': ArticleSitemap,
+    'staic': StaticViewSitemap,
 }
 
 urlpatterns = [
