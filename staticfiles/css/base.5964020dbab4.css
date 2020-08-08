@@ -172,9 +172,6 @@ div.error h1 {
 div.error a{
     display: block;
     width: 50%;
-    margin:  0 auto;
-    text-align: center;
-}
-div.error p{
     text-transform: uppercase;
+    margin:  0 auto;
 }

@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.humanize',
     'django.contrib.sitemaps',
+    'django.contrib.postgres',
     
     
 
@@ -85,9 +86,9 @@ INSTALLED_APPS = [
     'storages',
  
      #local app
-    'articles',
-    'accounts',
-    'pages',
+    'articles.apps.ArticlesConfig',
+    'accounts.apps.AccountsConfig',
+    'pages.apps.PagesConfig',
 ]
 
 MIDDLEWARE = [

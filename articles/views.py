@@ -1,16 +1,24 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Article
 from django.contrib.auth import get_user_model
-from .models import Article, Category
-from django.db.models import Q
-from .forms import ArticleCreateForm, ArticleUpdateForm
 from django.urls import reverse_lazy, reverse
+from django.db.models import Q
+from django.contrib.postgres.search import SearchVector
+
+
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import View
 from django.core.exceptions import PermissionDenied
+
+from django.views.generic import View
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
+from .models import Article, Category
+from .models import Article, Category
+from .forms import ArticleCreateForm, ArticleUpdateForm
+
+
+
 
 
 import os
@@ -167,19 +175,35 @@ class ArticleDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class SearchView(View):
-    def get(self, request, *args, **kwargs):
-        articles = Article.objects.all()
-        q = request.GET.get("q", None)
-        if q is None:
-            search_list = None
-        elif not q:
-            search_list = []
-        else:
-            search_list = articles.filter(Q(title__icontains=q))
+class SearchView(ListView):
+    model = Article
+    template_name = "search.html"
+    context_object_name = 'search_list'
 
-        context = {"search_list": search_list}
-        return render(request, "search.html", context)
+    def get_queryset(self):
+        q = self.request.GET.get('q', None)
+        if q is None:
+            return None
+        # search_articles = Article.objects.filter(
+        #     Q(title__icontains=q) | Q(body__icontains=q)
+        # )
+        search_articles = Article.objects.annotate(
+            search=SearchVector('title', 'body'),
+        ).filter(search=q)
+        return search_articles
+
+    # def get(self, request, *args, **kwargs):
+    #     articles = Article.objects.all()
+    #     q = request.GET.get("q", None)
+    #     if q is None:
+    #         search_list = None
+    #     elif not q:
+    #         search_list = []
+    #     else:
+    #         search_list = articles.filter(Q(title__icontains=q) | Q(body__icontains=q))
+
+    #     context = {"search_list": search_list}
+    #     return render(request, "search.html", context)
 
 
 @login_required

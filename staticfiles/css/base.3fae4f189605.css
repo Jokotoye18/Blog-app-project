@@ -163,18 +163,12 @@ div.error{
 }
 
 div.error h1 {
-    font: larger;
-    font-weight: bolder;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-style: oblique;
     text-align: center;
+    border: 1px solid red;
 }
 div.error a{
+    border: 1px solid red;
     display: block;
     width: 50%;
     margin:  0 auto;
-    text-align: center;
-}
-div.error p{
-    text-transform: uppercase;
 }

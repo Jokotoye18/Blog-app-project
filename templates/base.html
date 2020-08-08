@@ -21,7 +21,7 @@
 </head>
 <body class="bg-light">
     {% include 'messages.html' %}
-    <header class="mb-5 sticky-top" style="z-index: 10;">
+    <header class="sticky-top" style="z-index: 10;">
         <div class="container">
             <nav class="navbar navbar-expand-md navbar-dark">
             <a class="navbar-brand brand mt-2 ml-0" href="{% url 'pages:home' %}"><img style="width: 12.5rem; height: 3.125rem; box-shadow: 2px 2px whitesmoke;" src="{% static 'images/Milton State Kings(3).png' %}" alt="logo"></a>
@@ -81,20 +81,25 @@
         </div>
     </header> 
     {% block content-img %}
-    {% endblock %}
+    {% endblock content-img %}
     
     {% block content %}
     {% endblock content %}
+    
+    {% block foot %}
     <div class=" d-flex my-4 justify-content-center social position fixed article">
         <a  href="https://www.linkedin.com/in/jokotoye-ademola-akin-12b539175/" target="_blank"><i class="fab fa-linkedin  mx-3 linkedin"></i></a>
         <a  href="https://twitter.com/AkinJokotoye" target="_blank"><i class="fab fa-twitter  mx-3 twitter"></i></a>
         <a  href="{% url 'pages:contact' %}"><i class="fas fa-envelope mx-3 contact"></i></a>
     </div>
+    {% endblock %}
+
     <footer class="text-center py-2">
         <div class="container">
-            <p class="lead">© 2020| Developed by <a href="{% url 'pages:about' %}">Ademola_oba</a></p>
+            <p class="lead">© 2020 | Developed by <a href="{% url 'pages:about' %}">Ademola_oba</a></p>
         </div>
     </footer>
+
     {% block extra-js1 %}
     {% endblock  %}
     <script src="{% static 'js/events.js' %}" type="text/javascript"></script>

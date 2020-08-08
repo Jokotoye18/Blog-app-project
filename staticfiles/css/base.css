@@ -51,6 +51,7 @@ footer{
 .contain-img{
     width: 100%;
     margin-top: -3em;
+    opacity: 0.9;
 }
 footer{
     
@@ -140,4 +141,40 @@ a.read-more:hover {
 }
 .article a:hover{
     font-weight: 600;
+}
+.img-container{
+    position: relative;
+    text-align: center;
+    color: #000000;
+}
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.bold{
+    font-weight: bolder;
+}
+div.error{
+    color: #E8E8E8;
+    background-color: #212529;
+    padding: 5rem;
+}
+
+div.error h1 {
+    font: larger;
+    font-weight: bolder;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-style: oblique;
+    text-align: center;
+}
+div.error a{
+    display: block;
+    width: 50%;
+    margin:  0 auto;
+    text-align: center;
+}
+div.error p{
+    text-transform: uppercase;
 }
