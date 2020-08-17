@@ -1,7 +1,10 @@
 from django.test import TestCase, Client
-from  articles.models import  Article, Category
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+
+from taggit.models import Tag
+
+from  articles.models import  Article, Category
 
 
 class TestArticleModels(TestCase):
@@ -22,8 +25,8 @@ class TestArticleModels(TestCase):
             title = 'New article',
             body = 'Article body',
             category = self.category,
-            tags = ['design', 'coding']
         )
+        self.article.tags.add('coding', 'programming')
 
     def test_string_represention(self):
         self.assertEqual(str(self.article), 'New article')
@@ -37,20 +40,20 @@ class TestArticleModels(TestCase):
         self.assertEqual(f'{self.article.body}', 'Article body')
         self.assertEqual(f'{self.article.category.title}', 'category test')
         self.assertEqual(f'{self.article.slug}', 'new-article')
+        
 
 
 
-
-# class CategoryModelViewTest(TestCase):
+class CategoryModelViewTest(TestCase):
     
-#     def setUp(self):
-#         self.category = Category.objects.create(
-#             title = 'Test category',
-#         )
+    def setUp(self):
+        self.category = Category.objects.create(
+            title = 'Test category',
+        )
 
-#     def test_string_represention(self):
-#         self.assertEqual(str(self.category), 'Test category')
+    def test_string_represention(self):
+        self.assertEqual(str(self.category), 'Test category')
 
 
-#     def test_article_content(self):
-#         self.assertEqual(f'{self.category.title}', 'Test category')
+    def test_article_content(self):
+        self.assertEqual(f'{self.category.title}', 'Test category')

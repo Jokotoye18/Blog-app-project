@@ -1,21 +1,17 @@
 from django.db import models
 from django.utils.html import mark_safe
-from markdown import markdown
 from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.urls import reverse
-from taggit.managers import TaggableManager
 from django.contrib.auth import get_user_model
 from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator, XtdCommentModerator
+
+from markdown import markdown
+from taggit.managers import TaggableManager
 from martor.models import MartorField
-from django.utils.html import mark_safe
 from markdown import markdown
 from rest_auth import serializers
-
-
-# from django_comments.moderation import CommentModerator
-# from django_comments_xtd.moderation import moderator, XtdCommentModerator
 
 
 class Category(models.Model):

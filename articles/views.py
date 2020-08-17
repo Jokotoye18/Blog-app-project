@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy, reverse
 from django.db.models import Q
+from django.utils import timezone
 from django.contrib.postgres.search import SearchVector
 
 
