@@ -8,9 +8,9 @@
 a:link{
     color: #007bff;
 }
-/* a:visited{
+a:visited{
     color: #17dac7;
-} */
+}
 a:hover{
     color: #8bb4e0;
 }

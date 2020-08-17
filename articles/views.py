@@ -36,43 +36,43 @@ from martor.utils import LazyEncoder
 
 
 class ArticleListView(ListView):
+    model = Article
     template_name = "articles/article_lists.html"
     context_object_name = "articles"
-    queryset = (
-        Article.objects.select_related('author', "category")
-        .prefetch_related("tags")
-        .filter(published="P")
-        .order_by("-date_added")
-    )
     paginate_by = 10
+
+    def get_queryset(self):
+        queryset = (
+            Article.objects.select_related('author', "category")
+            .prefetch_related("tags")
+            .filter(published="P")
+            .order_by("-date_added")
+        )
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.order_by("title")
-        context["latest_article"] = self.queryset[:5]
+        context["latest_article"] = Article.objects.filter(published='P').order_by("-date_added")[:5]
         return context
 
 
 class CategoryListView(ListView):
+    model = Article
     context_object_name = "category_list"
     template_name = "articles/category_list.html"
     paginate_by = 10
 
     def get_queryset(self):
-        articles = Article.objects.select_related("category").prefetch_related("tags")
-        return articles.filter(category__title=self.kwargs["title"], published="P").order_by(
+        articles = Article.objects.select_related("category", 'author').prefetch_related("tags")
+        articles = articles.filter(category__title=self.kwargs["title"], published="P").order_by(
             "-date_added"
         )
+        return articles
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        categories = self.get_queryset()
-        context["category"] = categories.only("category__title").first()
-        context["latest_articles"] = (
-            Article.objects.select_related("author", "category")
-            .prefetch_related("tags").filter(published="P")
-            .order_by("-date_added")[:5]
-        )
+        context["latest_articles"] = Article.objects.filter(published='P').order_by("-date_added")[:5]
         return context
 
 
@@ -83,17 +83,13 @@ class ArticleTagView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Article.objects.filter(tags__slug=self.kwargs["tag_slug"]).order_by(
+        return Article.objects.select_related('author', 'category').prefetch_related('tags').filter(tags__slug=self.kwargs["tag_slug"]).order_by(
             "-date_added"
         )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["latest_articles"] = (
-            Article.objects.select_related("author", "category")
-            .prefetch_related("tags").filter(published="P")
-            .order_by("-date_added")[:5]
-        )
+        context["latest_articles"] = Article.objects.filter(published='P').order_by("-date_added")[:5]
         # context["tagged"] = (
         #     self.get_queryset()
         #     .filter(tags__slug__icontains=self.kwargs["tag_slug"])
@@ -109,22 +105,24 @@ class ArticleDetailView(DetailView):
     query_pk_and_slug = True
     context_object_name = "article"
 
+
     def get_object(self):
-        return get_object_or_404(
+        article = get_object_or_404(
             Article.objects.select_related("category", "author").prefetch_related(
                 "tags"
             ),
             slug=self.kwargs.get("slug"),
             pk=self.kwargs.get("pk"),
         )
+        return article
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     object_tags = self.get_object().tags.values_list('name', flat=True)
-    #     print(object_tags)
-    #     articles = Article.objects.select_related('author', 'category').prefetch_related('tags')
-    #     context['related_articles'] = articles.filter(published='P', tags__name__in=object_tags).distinct()[:3]
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # object_tags = self.get_object().tags.values_list('name', flat=True)
+        # print(object_tags)
+        # articles = Article.objects.select_related('author', 'category').prefetch_related('tags')
+        # context['related_articles'] = articles.filter(published='P', tags__name__in=object_tags).distinct()[:3]
+        return context
 
 
 class ArticleCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):

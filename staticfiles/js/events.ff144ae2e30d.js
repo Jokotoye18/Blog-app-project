@@ -28,10 +28,13 @@ function changeNavBtnIcon() {
 }
 
 // Get the container element
-const btnContainer = document.querySelector("#activeList");
+const btnContainer = document.querySelector("#active");
+console.log(btnContainer)
 
 // Get all buttons with class="btn" inside the container
 const activeBtns = btnContainer.children;
+console.log(activeBtns)
+
 
 // Loop through the buttons and add the active class to the current/clicked button
 for (let i = 0; i < activeBtns.length; i++) {
@@ -41,12 +44,12 @@ for (let i = 0; i < activeBtns.length; i++) {
 
 
     // If there's no active class
-    if (current.length > 0) {
-      current[0].className = current[0].className.replace(" active", "");
-    }
+    // if (current.length > 0) {
+    //   current[0].className = current[0].className.replace(" active", "");
+    // }
 
-    // Add the active class to the current/clicked button
-    this.className += " active";
+    // // Add the active class to the current/clicked button
+    // this.className += " active";
   });
 }
 

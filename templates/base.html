@@ -29,7 +29,7 @@
                 <i id="nav-icon" class="fas fa-bars"></i>
             </button> 
             <div class="collapse navbar-collapse" id="navbarCollapse">  
-                <ul id="active" class="navbar-nav mr-auto mt-1 head">
+                <ul id="activeList" class="navbar-nav mr-auto mt-1 head">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'articles:article_lists' %}">Blog</a>
                     </li>
@@ -59,7 +59,7 @@
                     </li>
                 </ul>
                 {% else %}
-                <div class="mr-3">
+                <div class="mr-3 head">
                     <form class="form-inline my-2 my-lg-0 "> 
                         <a href="{% url 'login' %}" class="btn btn-outline-secondary mx-1"> Log In</a> 
                         <a href="{% url 'accounts:signup' %}" class="btn btn-primary mx-1">Sign up</a> 

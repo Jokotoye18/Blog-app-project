@@ -95,10 +95,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',#whitenoise
-    # 'django.middleware.cache.UpdateCacheMiddleware',#cache
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware', #cache
-    # 'csp.middleware.CSPMiddleware',#django-csp
     'django.middleware.csrf.CsrfViewMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',#debug_toolbar
     "django.middleware.common.BrokenLinkEmailsMiddleware", #Manager
@@ -113,13 +110,18 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR,'templates')],
-        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+            ],
+            'loaders': [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                ])
             ],
         },
     },
@@ -212,7 +214,7 @@ AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = 'articles:article_lists'
 LOGOUT_REDIRECT_URL = 'pages:home'
 
-# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
 
 # crispy_form
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -320,6 +322,10 @@ MARTOR_UPLOAD_URL = '/api/uploader/'  # change to local uploader
 MAX_IMAGE_UPLOAD_SIZE = 5242880  # 5MB
 
 
+# session config
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = "default"
+
 CACHE = {
         'default': {
             'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache', 
@@ -329,11 +335,7 @@ CACHE = {
             }
 
         }
-    }
-
-CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_SECONDS = 600   
-CACHE_MIDDLEWARE_KEY_PREFIX = '' 
+    } 
 
 
 

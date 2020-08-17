@@ -6,5 +6,5 @@ app_name = 'accounts'
 
 urlpatterns = [
     path('signup/', SignUp.as_view(), name='signup'),
-    path('profile-update/<username>/', AccountUpdateView.as_view(), name='account_update'),
+    path('<username>/', AccountUpdateView.as_view(), name='account_update'),
 ]

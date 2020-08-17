@@ -28,7 +28,7 @@ function changeNavBtnIcon() {
 }
 
 // Get the container element
-const btnContainer = document.querySelector("#activeList");
+const btnContainer = document.querySelector("#active");
 
 // Get all buttons with class="btn" inside the container
 const activeBtns = btnContainer.children;
@@ -37,7 +37,7 @@ const activeBtns = btnContainer.children;
 for (let i = 0; i < activeBtns.length; i++) {
   activeBtns[i].addEventListener("click", function() {
     let current = document.getElementsByClassName("active");
-    this.className += " active";
+    // this.className += " active";
 
 
     // If there's no active class

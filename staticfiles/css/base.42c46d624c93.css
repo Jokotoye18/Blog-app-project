@@ -5,14 +5,10 @@
 *,	*:before,	*:after	{		
     box-sizing:	border-box; 
 }
-a:link{
-    color: #007bff;
-}
-/* a:visited{
-    color: #17dac7;
-} */
-a:hover{
-    color: #8bb4e0;
+
+a.active{
+    background-color: black;
+    border-radius: 0.3em;
 }
 
 .head a:hover{
@@ -28,9 +24,9 @@ section ul a{
     margin: 1em 0;
     display: block;
 }
-.active{
-    background-color: black;
-    border-radius: 0.3em;
+section ul a:hover{
+    background-color: #ffffff;
+    border-radius: 0.5rem;
 }
 .asteriskField,#hint_id_username,#hint_id_password1,#hint_id_password2,#hint_id_new_password1{
     display: none;
@@ -182,8 +178,7 @@ div.error a{
 div.error p{
     text-transform: uppercase;
 }
-.article-border{
-    border-bottom: 1px dotted #212529;
-    padding: 1.3rem 0;
-    margin-bottom: 1rem;
+.article-list-category{
+    text-align: center;
+    border-bottom: 1px dotted red;
 }

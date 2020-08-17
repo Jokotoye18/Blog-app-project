@@ -18,6 +18,38 @@ for (let i = 0; i < social.length; i++) {
     })
 }
 
+function changeNavBtnIcon() {
+    let navIcon = document.querySelector('#nav-icon');
+    if (navIcon.className === 'fas fa-bars') {
+        navIcon.className = 'fas fa-times'
+    }else {
+        navIcon.className = 'fas fa-bars'
+    }
+}
+
+// // Get the container element
+// const btnContainer = document.querySelector("#activeList");
+
+// // Get all buttons with class="btn" inside the container
+// const activeBtns = btnContainer.children;
+
+// // Loop through the buttons and add the active class to the current/clicked button
+// for (let i = 0; i < activeBtns.length; i++) {
+//   activeBtns[i].addEventListener("click", function() {
+//     let current = document.getElementsByClassName("active");
+//     this.className += " active";
+
+
+//     // If there's no active class
+//     if (current.length > 0) {
+//       current[0].className = current[0].className.replace(" active", "");
+//     }
+
+//     // Add the active class to the current/clicked button
+//     this.className += " active";
+//   });
+// }
+
 linkedin.addEventListener("mouseover", () => linkedin.classList.add("linkedin-color"));
 linkedin.addEventListener("mouseout", () => linkedin.classList.remove("linkedin-color"));
 
@@ -27,19 +59,4 @@ twitter.addEventListener("mouseout", () => twitter.classList.remove("twitter-col
 contact.addEventListener("mouseover", () => contact.classList.add("contact-color"));
 contact.addEventListener("mouseout", () => contact.classList.remove("contact-color"));
 
-about.addEventListener("mouseover", () => about.classList.add("about-img"));
-about.addEventListener("mouseout", () => about.classList.remove("about-img"));
 
-
-
-subscribe.addEventListener("mouseover", () => subscribe.classList.add("btn-lg"));
-subscribe.addEventListener("mouseout", () => subscribe.classList.remove("btn-lg"));
-
-function changeNavBtnIcon() {
-    let navIcon = document.querySelector('#nav-icon');
-    if (navIcon.className === 'fas fa-bars') {
-        navIcon.className = 'fas fa-times'
-    }else {
-        navIcon.className = 'fas fa-bars'
-    }
-}

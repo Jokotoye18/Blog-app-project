@@ -8,13 +8,20 @@
 a:link{
     color: #007bff;
 }
-/* a:visited{
+a:visited{
     color: #17dac7;
-} */
+}
 a:hover{
     color: #8bb4e0;
 }
-
+a:active{
+    background-color: black;
+    border-radius: 0.3em;
+}
+a:active{
+    background-color: black;
+    border-radius: 0.3em;
+}
 .head a:hover{
     background-color: black;
     border-radius: 0.3em;
@@ -28,9 +35,9 @@ section ul a{
     margin: 1em 0;
     display: block;
 }
-.active{
-    background-color: black;
-    border-radius: 0.3em;
+section ul a:hover{
+    background-color: #ffffff;
+    border-radius: 0.5rem;
 }
 .asteriskField,#hint_id_username,#hint_id_password1,#hint_id_password2,#hint_id_new_password1{
     display: none;

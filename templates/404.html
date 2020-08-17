@@ -3,12 +3,12 @@
 {% block title %}page not found{% endblock %}
 
 {% block content %}
-<main class="border border-danger" style="padding: 6rem 0;">
+<main style="padding: 6rem 0;">
     <section class="d-flex justify-content-center align-item-center text-align-center">
         <div class="error">
             <h1 class="border border-danger">404</h1>
             <p>Oops, The page you are looking for can't be found!</p>
-            <a class="border border-danger" href="{% url 'pages:home' %}">Go back to homepage</a>
+            <a href="{% url 'pages:home' %}">Go back to homepage</a>
         </div>
     </section>
 </main>

@@ -78,6 +78,7 @@ django-comments-xtd = "==2.4.2"
 django-rest-auth = {extras = ["with_social"],version = "*"}
 drf-yasg = "*"
 pillow = "*"
+model-mommy = "*"
 
 [requires]
 python_version = "3.8"

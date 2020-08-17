@@ -44,12 +44,13 @@ class Article(models.Model):
         Category, related_name="articles", on_delete=models.CASCADE
     )
     body = MartorField()
+    truncated_content = models.CharField(max_length=250, default='Truncated content')
     tags = TaggableManager()
     image = models.ImageField(upload_to='article/pics', default='django.png')
     TAGGIT_CASE_INSENSITIVE = True
-    published = models.CharField(choices=PUBLISHED_CATAGORIES, default='D', max_length=1)
-    slug = models.SlugField(max_length=150, unique=True)
-    date_added = models.DateTimeField(auto_now_add=True)
+    published = models.CharField(choices=PUBLISHED_CATAGORIES, default='D', db_index=True, max_length=1)
+    slug = models.SlugField(max_length=150, unique=True, db_index=True)
+    date_added = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_date = models.DateTimeField(auto_now=True)
 
     objects = models.Manager()
