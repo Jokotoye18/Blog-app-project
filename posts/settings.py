@@ -323,8 +323,8 @@ MAX_IMAGE_UPLOAD_SIZE = 5242880  # 5MB
 
 
 # session config
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_CACHE_ALIAS = "default"
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+# SESSION_CACHE_ALIAS = "default"
 
 CACHE = {
         'default': {
