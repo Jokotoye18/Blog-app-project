@@ -40,7 +40,7 @@ class Article(models.Model):
         Category, related_name="articles", on_delete=models.CASCADE
     )
     body = MartorField()
-    truncated_content = models.CharField(max_length=250, default='Truncated content')
+    truncated_content = models.CharField(max_length=250)
     tags = TaggableManager()
     image = models.ImageField(upload_to='article/pics', default='django.png')
     TAGGIT_CASE_INSENSITIVE = True
