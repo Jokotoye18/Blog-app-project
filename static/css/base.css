@@ -9,11 +9,16 @@
 /* a:visited{
     color: #17dac7;
 } */
-a:hover{
+a{
+    transition: color 1s ease-in-out;
+}
+a:hover, a:focus{
     color: #8bb4e0;
 }
-
-.head a:hover{
+.head a{
+    transition: color 1s ease-in-out;
+}
+.head a:hover, .head a:focus{
     background-color: black;
     border-radius: 0.3em;
 }
@@ -133,15 +138,17 @@ code{
 pre{
     border: 1px solid #E8E8E8;
 }
-
-a.read-more:hover {
-    background-color: #212529;
-    color: #ffffff;
+a.read-more, .article a{
+    transition: all 1s ease-in-out;
 }
 .article a{
     color: #212529;
 }
-.article a:hover{
+a.read-more:hover, a.read-more:focus{
+    background-color: #212529;
+    color: #ffffff;
+}
+.article a:hover, .article a:focus{
     font-weight: 600;
 }
 .img-container{

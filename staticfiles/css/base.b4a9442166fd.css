@@ -10,13 +10,13 @@
     color: #17dac7;
 } */
 a{
-    transition: color 1s ease-in-out;
+    transition: color .5s ease-in-out;
 }
 a:hover{
     color: #8bb4e0;
 }
 .head a{
-    transition: color 1s ease-in-out;
+    transition: color .5s ease-in-out;
 }
 .head a:hover{
     background-color: black;
@@ -139,7 +139,7 @@ pre{
     border: 1px solid #E8E8E8;
 }
 a.read-more, .article a{
-    transition: all 1s ease-in-out;
+    transition: all .5s ease-in-out;
 }
 a.read-more:hover {
     background-color: #212529;

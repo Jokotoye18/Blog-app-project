@@ -7,7 +7,7 @@
 {% block title %}articles{% endblock %}
 
 {% block content-img %}
-    <img class="contain-img" src="{% static 'images/pexels-photo-3023358n3.jpeg' %}" alt="Photo">
+    <img style="object-fit: cover;" class="contain-img" src="{% static 'images/markus-spiske-s7nlaF3kefg-unsplash(2)(1).jpg' %}" alt="Photo">
 {% endblock  %}   
 
 {% block content %}
@@ -30,7 +30,7 @@
                         <p class="card-text text-center text-muted lead" style="display: inline;"><i class="fas fa-comments"> {{ comment_count }} comment{{ comment_count|pluralize }} </i></p>
                         {% endif %}
                     </div>
-                    <a href="{% url 'articles:article_detail' article.slug article.pk %}"><img width="100%" src="{{ article.image.url }}" alt="{{ article.image.name }}"></a>
+                    <a href="{% url 'articles:article_detail' article.slug article.pk %}"><img style="object-fit: cover; height: 330px;" width="100%" src="{{ article.image.url }}" alt="{{ article.image.name }}"></a>
                     <p class="lead mt-3">{{ article.truncated_content }}</p>
                     <a class="btn d-block read-more" href="{% url 'articles:article_detail' article.slug article.pk %}">Read More</a>
                 </div>
@@ -73,7 +73,7 @@
                     {% for article in latest_article %}
                     <div class="row justify-content-between article mb-3">
                         <div class="col-4">
-                            <a href="{% url 'articles:article_detail' article.slug article.pk %}"><img width="100%" src="{{ article.image.url }}" alt="{{ article.image.name }}"></a>
+                            <a href="{% url 'articles:article_detail' article.slug article.pk %}"><img style="object-fit: cover; height: 40px;" width="100%" src="{{ article.image.url }}" alt="{{ article.image.name }}"></a>
                         </div>
                         <div class="col-8">
                             <p class="card-text lead"><a href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article }}</a></p>
