@@ -156,7 +156,6 @@ class ArticleUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-# LoginRequiredMixin
 class ArticleDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Article
     template_name = "articles/article_delete.html"
@@ -186,7 +185,7 @@ class SearchView(ListView):
         # search_articles = Article.objects.filter(
         #     Q(title__icontains=q) | Q(body__icontains=q)
         # )
-        search_articles = Article.objects.annotate(
+        search_articles = Article.objects.filter(published='P').annotate(
             search=SearchVector('title', 'body'),
         ).filter(search=q)
         return search_articles

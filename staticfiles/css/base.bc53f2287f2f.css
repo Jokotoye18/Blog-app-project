@@ -11,17 +11,13 @@ a:link{
 /* a:visited{
     color: #17dac7;
 } */
-ul{
-    transition: color 2s ease-in-out;
-}
 a:hover{
     color: #8bb4e0;
 }
-ul.head{
-    transition: all 2s ease-in-out;
+.head a{
+    transition: all 1s;
 }
-ul.head a:hover{
-    transition: all 2s ease-in-out;
+.head a:hover{
     background-color: black;
     border-radius: 0.3em;
 }
@@ -42,7 +38,7 @@ section ul a{
     display: none;
 }
 header{
-    background: rgb(33, 48, 56, 0.9);
+    background: rgb(33, 48, 56);
     width: 100%;
 }
 footer{

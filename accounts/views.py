@@ -1,20 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
-from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView,  UpdateView
 from django.views import View
+
+
+
 from .forms import AccountUpdateForm
-from django.http import HttpResponseRedirect
-
-
-
-
-from django.views.generic import CreateView
-from django.views.generic.edit import UpdateView
 from .forms import CustomUserCreationForm
 
 # Create your views here.
@@ -34,13 +30,17 @@ class AccountUpdateView(LoginRequiredMixin, View):
         form = AccountUpdateForm(instance=user)
         context = {'user':user, 'form':form}
         return render(request, 'accounts/account_update.html', context)
+
     def post(self, request, *args, **kwargs):
         user = get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
-        form = AccountUpdateForm(request.POST, instance=user)
+        form = AccountUpdateForm(request.POST or None, instance=user)
         if form.is_valid():
             form.save()
-        messages.success(request, 'Profile updated successfully!')
-        return redirect(reverse('pages:home'))
+            messages.success(request, 'Profile updated successfully!')
+            return redirect(reverse('pages:home'))
+        messages.error(request, 'Invalid fields check the error below.')
+        return render(request, 'accounts/account_update.html', {"form": form})
+        
 
 
 # class AccountUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):

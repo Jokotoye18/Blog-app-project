@@ -16,7 +16,7 @@ class HomePage(View):
 
 
     def post(self, request, *args, **kwargs):
-        form = SubscribeForm(request.POST)
+        form = SubscribeForm(request.POST or None)
         if form.is_valid():
             form.save()
             to_email = request.POST['email']
@@ -28,20 +28,19 @@ class HomePage(View):
             messages.info(request, 'Suscribed successfully')
             return redirect('pages:home')
         messages.error(request, 'Invalid Input! Try again.')
-        return redirect('pages:home')
+        return render(request, 'home.html', {'form':form})
 
     
     
-    #template_name = 'home.html'
+#template_name = 'home.html'
 
 class ContactView(View):
     def get(self, request, *args, **kwargs):
         form = ContactForm()
-        context = {'form':form}
-        return render(request, 'contact.html', context)
+        return render(request, 'contact.html', {'form':form})
 
     def post(self, request, *args, **kwargs):
-        form = ContactForm(data=request.POST)
+        form = ContactForm(data=request.POST or None)
         if form.is_valid():
             form.save()
             to_email = 'jokotoyeademola95@gmail.com'
@@ -56,8 +55,7 @@ class ContactView(View):
             messages.success(request, 'contact message received')
             return redirect('pages:contact')
         messages.error(request, 'Invalid Input! Try again.')
-        return redirect('pages:contact')
-        
+        return render(request, 'contact.html', {'form':form})        
 
 
 class AboutPageView(View):
@@ -65,8 +63,7 @@ class AboutPageView(View):
 
     def get(self, request, *args, **kwargs):
         form = SubscribeForm()
-        context = {'form':form}
-        return render(request, 'about.html', context)
+        return render(request, 'about.html', {'form':form})
 
     def post(self, request, *args, **kwargs):
         form = SubscribeForm(request.POST)
@@ -81,9 +78,4 @@ class AboutPageView(View):
             messages.info(request, 'Suscribed successfully')
             return redirect('pages:about')
         messages.error(request, 'Invalid Input! Try again.')
-        return redirect('pages:about')
-
-
-
-
-
+        return render(request, 'about.html', {'form':form})

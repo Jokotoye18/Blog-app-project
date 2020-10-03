@@ -65,12 +65,14 @@ class TestViews(TestCase):
         self.assertEqual(response_get.status_code, 200)
         self.assertContains(response_get, 'title')
         self.assertTemplateUsed(response_get, 'articles/article_new.html')
-        category =  Category.objects.get(pk=1)
-        # tag = Tag.objects.create(name='coding2')
+        print(self.article.tags.all())
         data =  {
             'title': 'My title',
+            'truncated_content': 'My article truncated content',
+            'category': self.category,
+            'tags': self.article.tags.all()[0],
+            'published': 'P',
             'body': 'My title body',
-            'category': category,
         }
         response_post = self.client.post(reverse('articles:article_create'), data=data)
         print(response_post.context[1])
@@ -89,7 +91,6 @@ class TestViews(TestCase):
         response = self.client.delete(
             reverse('articles:article_delete',  args=['new-article', 1])
             )
-        print(response)
         self.assertEqual(Article.objects.count(), 0)
         self.assertEqual(response.status_code, 302)
 

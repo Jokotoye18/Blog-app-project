@@ -11,9 +11,6 @@ a:link{
 /* a:visited{
     color: #17dac7;
 } */
-ul{
-    transition: color 2s ease-in-out;
-}
 a:hover{
     color: #8bb4e0;
 }

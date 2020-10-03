@@ -5,9 +5,7 @@
 *,	*:before,	*:after	{		
     box-sizing:	border-box; 
 }
-a:link{
-    color: #007bff;
-}
+
 /* a:visited{
     color: #17dac7;
 } */
