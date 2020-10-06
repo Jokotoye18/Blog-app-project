@@ -84,7 +84,7 @@ class ArticleTagView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Article.objects.select_related('author', 'category').prefetch_related('tags').filter(tags__slug=self.kwargs["tag_slug"]).order_by(
+        return Article.objects.filter(published='P').select_related('author', 'category').prefetch_related('tags').filter(tags__slug=self.kwargs["tag_slug"]).order_by(
             "-date_added"
         )
 
@@ -148,6 +148,12 @@ class ArticleUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     redirect_field_name = "next"
     query_pk_and_slug = True
     success_message = "Article updated successfully"
+
+    def form_valid(self, form):
+        form.instance.updated_date = timezone.now()
+        print(form.instance.updated_date)
+        return super().form_valid(form)
+
 
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()

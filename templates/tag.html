@@ -19,7 +19,7 @@
                     <h1 class="text-center article-border text-muted">{{article.category}}</h1>
                     <h1 class="lead text-center"><a class="card-title lead"  href="{% url 'articles:article_detail' article.slug article.pk %}">{{ article.title }}</a></h1>
                     <div class="text-center my-3">
-                        <small class="text-muted"><span class="mr-3"><i class="fas fa-user mr-1"></i>{{article.author.username}}</span><span class="mr-3"><i class="fas fa-calendar-alt mr-1"></i>{{ article.date_added|naturaltime }}</span><span class="mr-3"><i class="fas fa-clock mr-1"></i>{{ article.body|read }}</span></small>
+                        <small class="text-muted"><span class="mr-3"><i class="fas fa-user mr-1"></i>{{article.author.username}}</span>Last updated: <span class="mr-3"><i class="fas fa-calendar-alt mx-1"></i>{{ article.updated_date|naturaltime }}</span><span class="mr-3"><i class="fas fa-clock mr-1"></i>{{ article.body|read }}</span></small>
                         <!-- <p class="card-text text-center text-muted lead" style="display: inline;"><i class="fas fa-calendar-alt pr-3"> {{article.date_added|naturaltime }}</i></p> -->
                         {% if comment_count %}
                         <p class="card-text text-center text-muted lead" style="display: inline;"><i class="fas fa-comments"> {{ comment_count }} comment{{ comment_count|pluralize }} </i></p>

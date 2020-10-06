@@ -22,7 +22,7 @@
                         <span class="badge badge-info px-2"><a class="text-white" href="{% url 'articles:tags' tag.slug %}">{{ tag }}</a></span>
                         {% endfor %}
                     </div>
-                    <small class="text-muted"><span class="mr-3"><i class="fas fa-user mr-1"></i>{{article.author.username}}</span><span class="mr-3"><i class="fas fa-calendar-alt mr-1"></i>{{ article.date_added|naturaltime }}</span><span class="mr-3"><i class="fas fa-clock mr-1"></i>{{ article.body|read }}</span></small>
+                    <small class="text-muted"><span class="mr-3"><i class="fas fa-user mr-1"></i>{{article.author.username}}</span>Last updated: <span class="mr-3"><i class="fas fa-calendar-alt mx-1"></i>{{ article.updated_date|naturaltime }}</span><span class="mr-3"><i class="fas fa-clock mr-1"></i>{{ article.body|read }}</span></small>
                 </div>
                 <div class="card-body body-content article mb-5">
                     <div>
